@@ -1,4 +1,4 @@
-import {LoadedPlan, PlanTask} from "@/ types/ plan";
+import {LoadedPlan, PlanTask} from "@/types/plan";
 
 export const XP_PER_TASK = 10;
 

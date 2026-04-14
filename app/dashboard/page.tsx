@@ -4,13 +4,14 @@ import {useEffect, useMemo, useState} from "react";
 import {useRouter} from "next/navigation";
 import {Trash2} from "lucide-react";
 
-import {deletePlanForUser, getPlansForUser, updateTaskCompletion} from "@/lib/plans";
+import {deletePlanForUser, getPlansForUser, updateTaskCompletion,} from "@/lib/plans";
 import {useAuthUser} from "@/hooks/useAuthUser";
 
+import OverallConsistencyCard from "@/components/dashboard/OverallConsistencyCard";
 import SelectedPlanDetailsCard from "@/components/dashboard/SelectedPlanDetailsCard";
-import {LoadedPlan} from "@/ types/ plan";
-import {getPlanStats, XP_PER_TASK} from "@/utils/ plan";
 
+import type {LoadedPlan} from "@/types/plan";
+import {getPlanStats, XP_PER_TASK} from "@/utils/plan";
 
 export default function DashboardPage() {
     const router = useRouter();
@@ -18,35 +19,48 @@ export default function DashboardPage() {
 
     const [plans, setPlans] = useState<LoadedPlan[]>([]);
     const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [loadingPlans, setLoadingPlans] = useState(true);
     const [savingTaskIndex, setSavingTaskIndex] = useState<number | null>(null);
+
+    const authResolved = user !== null;
+    const isAuthenticated = !!user;
+
+    useEffect(() => {
+        if (!authResolved) return;
+
+        if (!isAuthenticated) {
+            router.replace("/login");
+        }
+    }, [authResolved, isAuthenticated, router]);
 
     useEffect(() => {
         async function loadPlans() {
-            if (!user) {
-                setLoading(false);
+            if (!isAuthenticated || !user) {
+                setLoadingPlans(false);
                 return;
             }
 
             try {
                 const allPlans = (await getPlansForUser(user.uid)) as LoadedPlan[];
-                console.log(allPlans)
+
                 if (!allPlans.length) {
                     router.push("/onboarding");
                     return;
                 }
 
                 setPlans(allPlans);
-                setSelectedPlanId(allPlans[0].id);
+                setSelectedPlanId((prev) => prev ?? allPlans[0].id);
             } catch (error) {
                 console.error("Failed to load plans:", error);
             } finally {
-                setLoading(false);
+                setLoadingPlans(false);
             }
         }
 
-        loadPlans();
-    }, [user, router]);
+        if (authResolved) {
+            loadPlans();
+        }
+    }, [authResolved, isAuthenticated, user, router]);
 
     const selectedPlan = useMemo(() => {
         return plans.find((plan) => plan.id === selectedPlanId) ?? null;
@@ -91,35 +105,48 @@ export default function DashboardPage() {
         try {
             await deletePlanForUser(user.uid, planId);
 
-            const remainingPlans = plans.filter((p) => p.id !== planId);
+            const remainingPlans = plans.filter((plan) => plan.id !== planId);
             setPlans(remainingPlans);
 
-            if (selectedPlanId === planId) {
-                setSelectedPlanId(remainingPlans[0]?.id ?? null);
+            if (!remainingPlans.length) {
+                setSelectedPlanId(null);
+                router.push("/onboarding");
+                return;
             }
-        } catch (err) {
-            console.error("Delete failed:", err);
+
+            if (selectedPlanId === planId) {
+                setSelectedPlanId(remainingPlans[0].id);
+            }
+        } catch (error) {
+            console.error("Delete failed:", error);
         }
     };
+
     const handleLoadNextPlan = async () => {
         if (!selectedPlanStats?.allDone) return;
-
-        // TODO: generate/load next plan here
-        console.log("Load next plan...");
+        console.log("Load next steps...");
     };
 
-    if (loading) {
+    if (!authResolved) {
         return (
             <main className="px-6 py-10">
-                <div className="mx-auto max-w-7xl">Loading dashboard...</div>
+                <div className="mx-auto max-w-7xl">Checking session...</div>
             </main>
         );
     }
 
-    if (!user) {
+    if (!isAuthenticated) {
         return (
             <main className="px-6 py-10">
-                <div className="mx-auto max-w-7xl">Please log in first.</div>
+                <div className="mx-auto max-w-7xl">Redirecting to login...</div>
+            </main>
+        );
+    }
+
+    if (loadingPlans) {
+        return (
+            <main className="px-6 py-10">
+                <div className="mx-auto max-w-7xl">Loading dashboard...</div>
             </main>
         );
     }
@@ -142,9 +169,6 @@ export default function DashboardPage() {
                                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--primary)]">
                                     Your Goals
                                 </p>
-                                {/*<p className="text-xs text-[var(--text-muted)]">*/}
-                                {/*    Switch between your plans*/}
-                                {/*</p>*/}
                             </div>
 
                             <div className="flex flex-wrap gap-3">
@@ -162,6 +186,7 @@ export default function DashboardPage() {
                                             }`}
                                         >
                                             <button
+                                                type="button"
                                                 onClick={() => setSelectedPlanId(plan.id)}
                                                 className="text-left"
                                             >
@@ -188,12 +213,10 @@ export default function DashboardPage() {
                         </div>
 
                         <div className="pt-6">
-                            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-                                <div className="max-w-3xl">
-                                    <p className="mt-5 leading-8 text-[var(--text-muted)]">
-                                        {selectedPlan.summary}
-                                    </p>
-                                </div>
+                            <div className="max-w-3xl">
+                                <p className="mt-5 leading-8 text-[var(--text-muted)]">
+                                    {selectedPlan.summary}
+                                </p>
                             </div>
                         </div>
 
@@ -273,7 +296,7 @@ export default function DashboardPage() {
                 </section>
 
                 <aside className="space-y-6">
-                    {/*<OverallConsistencyCard plans={plans} />*/}
+                    <OverallConsistencyCard plans={plans}/>
                     <SelectedPlanDetailsCard planId={selectedPlanId} plans={plans}/>
                 </aside>
             </div>

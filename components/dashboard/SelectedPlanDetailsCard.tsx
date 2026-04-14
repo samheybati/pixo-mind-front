@@ -2,8 +2,8 @@
 
 import {CheckCircle2, Clock3, Sparkles, Trophy} from "lucide-react";
 
-import {formatShortDate, getPlanStats, XP_PER_TASK} from "@/utils/ plan";
-import {LoadedPlan} from "@/ types/ plan";
+import {formatShortDate, getPlanStats, XP_PER_TASK} from "@/utils/plan";
+import {LoadedPlan} from "@/types/plan";
 
 type SelectedPlanDetailsCardProps = {
     planId: string | null;

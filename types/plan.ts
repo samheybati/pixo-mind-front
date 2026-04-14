@@ -7,12 +7,23 @@ export type PlanTask = {
     completedAt?: string | null;
 };
 
+export type PlanLevel = "beginner" | "intermediate" | "advanced";
+
 export type LoadedPlan = {
     id: string;
     goal: string;
-    description: string;
+    description?: string;
     summary: string;
     timePerDay: string;
-    level: string;
+    level: PlanLevel;
+    tasks: PlanTask[];
+};
+
+export type CreatePlanInput = {
+    goal: string;
+    description?: string;
+    summary: string;
+    timePerDay: string;
+    level: PlanLevel;
     tasks: PlanTask[];
 };

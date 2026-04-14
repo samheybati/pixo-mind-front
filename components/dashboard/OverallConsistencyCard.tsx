@@ -2,8 +2,8 @@
 
 import {CircleCheckBig} from "lucide-react";
 
-import {formatLongToday, formatShortDate, getTotalXp, isToday, XP_PER_TASK,} from "@/utils/ plan";
-import {LoadedPlan} from "@/ types/ plan";
+import {formatLongToday, formatShortDate, getTotalXp, isToday, XP_PER_TASK,} from "@/utils/plan";
+import {LoadedPlan} from "@/types/plan";
 
 
 type OverallConsistencyCardProps = {

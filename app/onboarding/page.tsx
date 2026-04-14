@@ -1,6 +1,6 @@
 "use client";
 
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import {generateTenDayPlan} from "@/lib/ai";
 import {savePlanForUser} from "@/lib/plans";
@@ -15,6 +15,15 @@ export default function OnboardingPage() {
     const [timePerDay, setTimePerDay] = useState("20");
     const [level, setLevel] = useState("beginner");
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        if (user === null) return;
+        if (!user) {
+            router.replace("/login");
+        }
+    }, [user, router]);
+
+    if (!user) return null;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -46,9 +55,9 @@ export default function OnboardingPage() {
             }));
 
             await savePlanForUser(user.uid, {
-                goal: title,           // 👈 برای UI
-                description,           // 👈 توضیح کاربر
-                summary: plan.summary, // 👈 از AI
+                goal: title,
+                description,
+                summary: plan.summary,
                 timePerDay,
                 level,
                 tasks: normalizedTasks,
