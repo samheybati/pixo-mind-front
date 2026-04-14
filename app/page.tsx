@@ -38,14 +38,14 @@ export default function HomePage() {
                     href="/onboarding"
                     className="rounded-2xl bg-[var(--primary)] px-6 py-3.5 text-center font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:-translate-y-0.5 hover:opacity-95"
                 >
-                  Start Your Plan
+                  Create Your New Plan
                 </Link>
 
                 <Link
                     href="/dashboard"
                     className="rounded-2xl border border-[var(--border)] bg-[var(--bg)] px-6 py-3.5 text-center font-semibold text-[var(--text)] transition hover:bg-white/70 dark:hover:bg-white/10"
                 >
-                  View Demo Dashboard
+                  View Dashboard
                 </Link>
               </div>
 

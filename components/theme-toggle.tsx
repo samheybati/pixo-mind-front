@@ -1,6 +1,5 @@
 "use client";
 
-import {Moon, Sun} from "lucide-react";
 import {useTheme} from "next-themes";
 import {useEffect, useState} from "react";
 
@@ -16,14 +15,21 @@ export function ThemeToggle() {
 
     const isDark = theme === "dark";
 
+    const handleToggle = (e: React.MouseEvent) => {
+        // جلوگیری از کلیک والد (خیلی مهم برای dropdown)
+        e.stopPropagation();
+
+        setTheme(isDark ? "light" : "dark");
+    };
+
     return (
         <button
             type="button"
-            onClick={() => setTheme(isDark ? "light" : "dark")}
-            className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/80 px-4 py-2 text-sm font-medium text-gray-800 shadow-sm backdrop-blur transition hover:scale-[1.02] dark:border-white/10 dark:bg-white/10 dark:text-white"
+            aria-label="Toggle theme"
+            onClick={handleToggle}
+            className={`theme-switch ${isDark ? "theme-switch-dark" : ""}`}
         >
-            {isDark ? <Sun size={16}/> : <Moon size={16}/>}
-            {isDark ? "Light" : "Dark"}
+            <span className="theme-switch-thumb"/>
         </button>
     );
 }
