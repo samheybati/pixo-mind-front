@@ -1,6 +1,15 @@
 {
   "projects": {
     "default": "habit-forge-samin"
-  }
+  },
+  "targets": {
+    "chatbot-452708": {
+      "hosting": {
+        "main": [
+          "habit-forge"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
-
