@@ -56,7 +56,7 @@ export default function DashboardPage() {
                 const allPlans = await getPlansForUser(user.uid);
 
                 if (!allPlans.length) {
-                    router.push("/onboarding");
+                    router.push("/define-a-plan");
                     return;
                 }
 
@@ -150,7 +150,7 @@ export default function DashboardPage() {
 
             if (!remainingPlans.length) {
                 setSelectedPlanId(null);
-                router.push("/onboarding");
+                router.push("/define-a-plan");
                 return;
             }
 
@@ -212,6 +212,14 @@ export default function DashboardPage() {
                                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--primary)]">
                                     Your Goals
                                 </p>
+
+                                <button
+                                    type="button"
+                                    onClick={() => router.push("/define-a-plan")}
+                                    className="rounded-2xl bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
+                                >
+                                    New plan
+                                </button>
                             </div>
 
                             <div className="flex flex-wrap gap-3">

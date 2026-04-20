@@ -99,7 +99,7 @@ export default function HomePage() {
                 </Link>
 
                 <Link
-                    href="/onboarding"
+                    href="/define-a-plan"
                     className="rounded-2xl border border-[var(--border)] bg-[var(--bg)] px-6 py-3.5 text-center font-semibold text-[var(--text)] transition hover:bg-white/70 dark:hover:bg-white/10"
                 >
                   Explore the plan flow
