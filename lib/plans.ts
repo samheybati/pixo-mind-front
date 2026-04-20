@@ -12,6 +12,15 @@ import {
 import {db} from "@/lib/firebase";
 import type {CreatePlanInput, LoadedPlan, PlanTask} from "@/types/plan";
 
+type RawPlanTask = {
+    day?: unknown;
+    shortTitle?: unknown;
+    title?: unknown;
+    description?: unknown;
+    completed?: unknown;
+    completedAt?: unknown;
+};
+
 export async function savePlanForUser(userId: string, plan: CreatePlanInput) {
     const plansRef = collection(db, "users", userId, "plans");
 
@@ -43,14 +52,18 @@ export async function getPlansForUser(userId: string): Promise<LoadedPlan[]> {
             summary: data.summary ?? "",
             timePerDay: data.timePerDay ?? "",
             level: data.level ?? "beginner",
-            tasks: (data.tasks ?? []).map((task: any) => ({
-                day: task.day,
-                shortTitle: task.shortTitle ?? "",
-                title: task.title ?? "",
-                description: task.description ?? "",
-                completed: !!task.completed,
-                completedAt: task.completedAt ?? null,
-            })),
+            tasks: (data.tasks ?? []).map((task: unknown, index: number) => {
+                const raw = (task ?? {}) as RawPlanTask;
+
+                return {
+                    day: typeof raw.day === "number" ? raw.day : index + 1,
+                    shortTitle: String(raw.shortTitle ?? ""),
+                    title: String(raw.title ?? ""),
+                    description: String(raw.description ?? ""),
+                    completed: !!raw.completed,
+                    completedAt: typeof raw.completedAt === "string" ? raw.completedAt : null,
+                };
+            }),
         };
     });
 }

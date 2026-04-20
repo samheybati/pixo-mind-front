@@ -26,9 +26,11 @@ export default function LoginPage() {
                     await saveUserToFirestore(result.user);
                     router.push("/dashboard");
                 }
-            } catch (err : any ) {
+            } catch (err: unknown) {
                 console.error(err);
-                setError(err?.message || "Login failed");
+                const message =
+                    err instanceof Error ? err.message : "Login failed";
+                setError(message);
             }
         }
 
@@ -44,15 +46,21 @@ export default function LoginPage() {
             await saveUserToFirestore(result.user);
 
             router.push("/dashboard");
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error(err);
 
-            if (err?.code === "auth/popup-blocked") {
+            if (
+                typeof err === "object" &&
+                err !== null &&
+                "code" in err &&
+                (err as { code?: unknown }).code === "auth/popup-blocked"
+            ) {
                 await loginWithGoogleRedirect();
                 return;
             }
 
-            setError(err?.message || "Login failed");
+            const message = err instanceof Error ? err.message : "Login failed";
+            setError(message);
         } finally {
             setLoading(false);
         }

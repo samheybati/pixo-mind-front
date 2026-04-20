@@ -12,6 +12,12 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+
+    // Firebase Functions build output (generated JS)
+    "functions/lib/**",
+
+    // Firebase CLI deploy artifacts (generated)
+    ".firebase/**",
   ]),
 ]);
 

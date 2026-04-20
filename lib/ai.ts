@@ -26,18 +26,30 @@ export type GeneratedPlan = {
     tasks: GeneratedPlanTask[];
 };
 
+type RawGeneratedPlan = {
+    summary?: unknown;
+    tasks?: unknown;
+};
+
+type RawGeneratedPlanTask = {
+    day?: unknown;
+    shortTitle?: unknown;
+    title?: unknown;
+    description?: unknown;
+};
+
 function extractJson(text: string) {
     const cleaned = text.trim();
 
     try {
-        return JSON.parse(cleaned);
+        return JSON.parse(cleaned) as unknown;
     } catch {
         const match = cleaned.match(/\{[\s\S]*\}/);
         if (!match) {
             throw new Error("No JSON object found in AI response");
         }
 
-        return JSON.parse(match[0]);
+        return JSON.parse(match[0]) as unknown;
     }
 }
 
@@ -135,7 +147,7 @@ Use this JSON shape exactly:
     console.log("RAW AI RESPONSE:", rawText);
 
     try {
-        const parsed = extractJson(rawText);
+        const parsed = extractJson(rawText) as RawGeneratedPlan;
 
         if (
             !parsed ||
@@ -146,12 +158,16 @@ Use this JSON shape exactly:
             throw new Error("AI returned invalid plan structure");
         }
 
-        const normalizedTasks = parsed.tasks.map((task: any, index: number) => ({
-            day: Number(task.day ?? index + 1),
-            shortTitle: String(task.shortTitle ?? "").trim(),
-            title: String(task.title ?? "").trim(),
-            description: String(task.description ?? "").trim(),
-        }));
+        const normalizedTasks = parsed.tasks.map((task: unknown, index: number) => {
+            const raw = (task ?? {}) as RawGeneratedPlanTask;
+
+            return {
+                day: Number(raw.day ?? index + 1),
+                shortTitle: String(raw.shortTitle ?? "").trim(),
+                title: String(raw.title ?? "").trim(),
+                description: String(raw.description ?? "").trim(),
+            };
+        });
 
         const finalPlan: GeneratedPlan = {
             summary: parsed.summary.trim(),
