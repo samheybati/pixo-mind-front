@@ -10,8 +10,8 @@ import {
     updateDoc,
 } from "firebase/firestore";
 
-import {db} from "@/lib/firebase/client";
-import type {CreatePlanInput, LoadedPlan, PlanTask} from "@/features/plans/types/plan";
+import type { CreatePlanInput, LoadedPlan, PlanTask } from "@/features/plans/types/plan";
+import { db } from "@/lib/firebase/client";
 
 type RawPlanTask = {
     day?: unknown;
@@ -69,11 +69,7 @@ export async function getPlansForUser(userId: string): Promise<LoadedPlan[]> {
     });
 }
 
-export async function updateTaskCompletion(
-    userId: string,
-    planId: string,
-    tasks: PlanTask[]
-) {
+export async function updateTaskCompletion(userId: string, planId: string, tasks: PlanTask[]) {
     const planRef = doc(db, "users", userId, "plans", planId);
 
     await updateDoc(planRef, {
@@ -85,4 +81,3 @@ export async function deletePlanForUser(userId: string, planId: string) {
     const planRef = doc(db, "users", userId, "plans", planId);
     await deleteDoc(planRef);
 }
-

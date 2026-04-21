@@ -1,7 +1,7 @@
-import {getAI, getGenerativeModel, GoogleAIBackend} from "firebase/ai";
-import {app} from "@/lib/firebase/client";
+import { app } from "@/lib/firebase/client";
+import { getAI, getGenerativeModel, GoogleAIBackend } from "firebase/ai";
 
-const ai = getAI(app, {backend: new GoogleAIBackend()});
+const ai = getAI(app, { backend: new GoogleAIBackend() });
 
 const model = getGenerativeModel(ai, {
     model: "gemini-2.5-flash-lite",
@@ -181,4 +181,3 @@ Use this JSON shape exactly:
         throw new Error("AI returned invalid JSON");
     }
 }
-

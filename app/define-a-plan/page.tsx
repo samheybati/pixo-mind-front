@@ -1,12 +1,12 @@
 "use client";
 
-import {useEffect, useMemo, useState} from "react";
-import {useRouter} from "next/navigation";
-import {Sparkles} from "lucide-react";
+import { Sparkles } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 
-import {generateLevelPlan} from "@/lib/ai/client";
-import {savePlanForUser} from "@/lib/services/plans.service";
-import {useAuthUser} from "@/hooks/useAuthUser";
+import { useAuthUser } from "@/hooks/useAuthUser";
+import { generateLevelPlan } from "@/lib/ai/client";
+import { savePlanForUser } from "@/lib/services/plans.service";
 
 type PlanLevel = "beginner" | "intermediate" | "advanced";
 
@@ -76,8 +76,7 @@ export default function DefineAPlanPage() {
     if (user === undefined) {
         return (
             <main className="flex min-h-full items-center justify-center px-6 py-10">
-                <div
-                    className="w-full max-w-xl rounded-[28px] border border-[var(--border)] bg-[var(--card)] p-8 text-center shadow-xl">
+                <div className="w-full max-w-xl rounded-[28px] border border-[var(--border)] bg-[var(--card)] p-8 text-center shadow-xl">
                     Checking your session...
                 </div>
             </main>
@@ -87,8 +86,7 @@ export default function DefineAPlanPage() {
     if (user === null) {
         return (
             <main className="flex min-h-full items-center justify-center px-6 py-10">
-                <div
-                    className="w-full max-w-xl rounded-[28px] border border-[var(--border)] bg-[var(--card)] p-8 text-center shadow-xl">
+                <div className="w-full max-w-xl rounded-[28px] border border-[var(--border)] bg-[var(--card)] p-8 text-center shadow-xl">
                     Redirecting to login...
                 </div>
             </main>
@@ -97,17 +95,13 @@ export default function DefineAPlanPage() {
 
     return (
         <main className="relative flex min-h-full items-center justify-center bg-[var(--bg)] px-6 py-10">
-            <div
-                className="absolute inset-0 -z-20 bg-gradient-to-b from-orange-50/80 via-[var(--bg)] to-[var(--bg)] dark:from-[#1a120c] dark:via-[var(--bg)] dark:to-[var(--bg)]"/>
-            <div
-                className="absolute left-1/2 top-1/2 -z-10 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-400/10 blur-3xl dark:bg-orange-500/10"/>
+            <div className="absolute inset-0 -z-20 bg-gradient-to-b from-orange-50/80 via-[var(--bg)] to-[var(--bg)] dark:from-[#1a120c] dark:via-[var(--bg)] dark:to-[var(--bg)]" />
+            <div className="absolute left-1/2 top-1/2 -z-10 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-400/10 blur-3xl dark:bg-orange-500/10" />
 
-            <div
-                className="w-full max-w-3xl rounded-[32px] border border-[var(--border)] bg-[var(--card)] p-8 shadow-[0_20px_80px_rgba(0,0,0,0.08)] sm:p-10">
+            <div className="w-full max-w-3xl rounded-[32px] border border-[var(--border)] bg-[var(--card)] p-8 shadow-[0_20px_80px_rgba(0,0,0,0.08)] sm:p-10">
                 <div className="mb-8">
-                    <div
-                        className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--primary)]">
-                        <Sparkles size={14}/>
+                    <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--primary)]">
+                        <Sparkles size={14} />
                         Define a plan
                     </div>
 
@@ -138,7 +132,10 @@ export default function DefineAPlanPage() {
                         </div>
 
                         <div>
-                            <label htmlFor="plan-description" className="mb-2 block text-sm font-medium">
+                            <label
+                                htmlFor="plan-description"
+                                className="mb-2 block text-sm font-medium"
+                            >
                                 What exactly do you want to achieve?
                             </label>
                             <textarea
@@ -153,7 +150,10 @@ export default function DefineAPlanPage() {
 
                         <div className="grid gap-6 sm:grid-cols-2">
                             <div>
-                                <label htmlFor="time-per-day" className="mb-2 block text-sm font-medium">
+                                <label
+                                    htmlFor="time-per-day"
+                                    className="mb-2 block text-sm font-medium"
+                                >
                                     Time per day
                                 </label>
                                 <select
@@ -195,15 +195,14 @@ export default function DefineAPlanPage() {
                     >
                         {loading ? (
                             <div className="flex items-center justify-center gap-3">
-                                <span
-                                    className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white"/>
+                                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
                                 <div className="flex flex-col items-start">
-        <span className="text-sm font-semibold leading-none">
-          Generating your plan...
-        </span>
+                                    <span className="text-sm font-semibold leading-none">
+                                        Generating your plan...
+                                    </span>
                                     <span className="mt-1 text-[11px] leading-none text-white/80">
-          Based on your goal, time, and level
-        </span>
+                                        Based on your goal, time, and level
+                                    </span>
                                 </div>
                             </div>
                         ) : (
@@ -215,4 +214,3 @@ export default function DefineAPlanPage() {
         </main>
     );
 }
-

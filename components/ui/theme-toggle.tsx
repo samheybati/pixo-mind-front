@@ -1,9 +1,9 @@
 "use client";
 
-import {useTheme} from "next-themes";
+import { useTheme } from "next-themes";
 
 export function ThemeToggle() {
-    const {resolvedTheme, setTheme} = useTheme();
+    const { resolvedTheme, setTheme } = useTheme();
     const isDark = (resolvedTheme ?? "light") === "dark";
 
     const handleToggle = (e: React.MouseEvent) => {
@@ -20,8 +20,7 @@ export function ThemeToggle() {
             onClick={handleToggle}
             className={`theme-switch ${isDark ? "theme-switch-dark" : ""}`}
         >
-            <span className="theme-switch-thumb"/>
+            <span className="theme-switch-thumb" />
         </button>
     );
 }
-

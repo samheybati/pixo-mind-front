@@ -1,7 +1,7 @@
 "use client";
 
-import {useEffect} from "react";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function OnboardingPage() {
     const router = useRouter();
@@ -16,4 +16,3 @@ export default function OnboardingPage() {
         </main>
     );
 }
-

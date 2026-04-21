@@ -1,4 +1,4 @@
-import type {LoadedPlan} from "../types/plan";
+import type { LoadedPlan } from "../types/plan";
 
 export const XP_PER_TASK = 10;
 export const STEP_CHUNK_SIZE = 5;
@@ -44,14 +44,12 @@ export function getPlanStats(plan: LoadedPlan) {
     const completedTasks = plan.tasks.filter((task) => task.completed);
     const completedCount = completedTasks.length;
     const totalCount = plan.tasks.length;
-    const progressPercent = totalCount
-        ? Math.round((completedCount / totalCount) * 100)
-        : 0;
+    const progressPercent = totalCount ? Math.round((completedCount / totalCount) * 100) : 0;
 
     const unlockedGroups = Math.floor(completedCount / STEP_CHUNK_SIZE);
     const visibleCount = Math.min(
         totalCount,
-        Math.max(STEP_CHUNK_SIZE, (unlockedGroups + 1) * STEP_CHUNK_SIZE)
+        Math.max(STEP_CHUNK_SIZE, (unlockedGroups + 1) * STEP_CHUNK_SIZE),
     );
 
     const visibleTasks = plan.tasks.slice(0, visibleCount);
@@ -66,4 +64,3 @@ export function getPlanStats(plan: LoadedPlan) {
         visibleTasks,
     };
 }
-

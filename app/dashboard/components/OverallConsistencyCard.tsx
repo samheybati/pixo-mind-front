@@ -1,8 +1,8 @@
 "use client";
 
-import {CircleCheckBig} from "lucide-react";
+import { CircleCheckBig } from "lucide-react";
 
-import type {LoadedPlan} from "@/features/plans/types/plan";
+import type { LoadedPlan } from "@/features/plans/types/plan";
 import {
     formatLongToday,
     formatShortDate,
@@ -15,13 +15,13 @@ type OverallConsistencyCardProps = {
     plans: LoadedPlan[];
 };
 
-export default function OverallConsistencyCard({plans}: OverallConsistencyCardProps) {
+export default function OverallConsistencyCard({ plans }: OverallConsistencyCardProps) {
     const allTasks = plans.flatMap((plan) =>
         plan.tasks.map((task) => ({
             ...task,
             planId: plan.id,
             planGoal: plan.goal,
-        }))
+        })),
     );
 
     const completedTasks = allTasks.filter((task) => task.completed);
@@ -42,8 +42,7 @@ export default function OverallConsistencyCard({plans}: OverallConsistencyCardPr
 
     return (
         <div className="relative">
-            <div
-                className="absolute inset-0 -z-10 rounded-[28px] bg-gradient-to-br from-orange-500/10 to-amber-400/10 blur-2xl"/>
+            <div className="absolute inset-0 -z-10 rounded-[28px] bg-gradient-to-br from-orange-500/10 to-amber-400/10 blur-2xl" />
 
             <div className="rounded-[28px] border border-[var(--border)] bg-[var(--bg)] p-6">
                 <div className="mb-2">
@@ -67,10 +66,8 @@ export default function OverallConsistencyCard({plans}: OverallConsistencyCardPr
                 </div>
 
                 <div className="mb-6 flex items-center justify-center">
-                    <div
-                        className="flex h-36 w-36 items-center justify-center rounded-full border-[10px] border-orange-200 dark:border-orange-900/50">
-                        <div
-                            className="flex h-24 w-24 flex-col items-center justify-center rounded-full bg-[var(--card)] text-center shadow-sm">
+                    <div className="flex h-36 w-36 items-center justify-center rounded-full border-[10px] border-orange-200 dark:border-orange-900/50">
+                        <div className="flex h-24 w-24 flex-col items-center justify-center rounded-full bg-[var(--card)] text-center shadow-sm">
                             <span className="text-3xl font-bold">{progressPercent}%</span>
                             <span className="text-xs text-[var(--text-muted)]">progress</span>
                         </div>
@@ -86,10 +83,13 @@ export default function OverallConsistencyCard({plans}: OverallConsistencyCardPr
                             >
                                 <div className="min-w-0 flex-1">
                                     <div className="flex items-center gap-3">
-                                        <CircleCheckBig size={18} className="shrink-0 text-green-500"/>
+                                        <CircleCheckBig
+                                            size={18}
+                                            className="shrink-0 text-green-500"
+                                        />
                                         <span className="truncate text-sm font-medium">
-                      {task.shortTitle}
-                    </span>
+                                            {task.shortTitle}
+                                        </span>
                                     </div>
 
                                     <p className="mt-1 pl-8 text-xs text-[var(--text-muted)]">
@@ -98,13 +98,12 @@ export default function OverallConsistencyCard({plans}: OverallConsistencyCardPr
                                 </div>
 
                                 <span className="ml-3 shrink-0 text-xs text-[var(--text-muted)]">
-                  +{XP_PER_TASK} XP
-                </span>
+                                    +{XP_PER_TASK} XP
+                                </span>
                             </div>
                         ))
                     ) : (
-                        <div
-                            className="rounded-2xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-sm text-[var(--text-muted)]">
+                        <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-sm text-[var(--text-muted)]">
                             No tasks completed today.
                         </div>
                     )}
@@ -113,4 +112,3 @@ export default function OverallConsistencyCard({plans}: OverallConsistencyCardPr
         </div>
     );
 }
-

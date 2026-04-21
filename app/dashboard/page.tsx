@@ -1,15 +1,19 @@
 "use client";
 
-import {useEffect, useMemo, useState} from "react";
-import {useRouter} from "next/navigation";
-import {Trash2} from "lucide-react";
+import { Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 
-import {deletePlanForUser, getPlansForUser, updateTaskCompletion} from "@/lib/services/plans.service";
-import {useAuthUser} from "@/hooks/useAuthUser";
-import type {LoadedPlan} from "@/features/plans/types/plan";
-import {getPlanStats, STEP_CHUNK_SIZE, XP_PER_TASK} from "@/features/plans/utils/plan";
 import OverallConsistencyCard from "@/app/dashboard/components/OverallConsistencyCard";
 import SelectedPlanDetailsCard from "@/app/dashboard/components/SelectedPlanDetailsCard";
+import type { LoadedPlan } from "@/features/plans/types/plan";
+import { getPlanStats, STEP_CHUNK_SIZE, XP_PER_TASK } from "@/features/plans/utils/plan";
+import { useAuthUser } from "@/hooks/useAuthUser";
+import {
+    deletePlanForUser,
+    getPlansForUser,
+    updateTaskCompletion,
+} from "@/lib/services/plans.service";
 const MAX_VISIBLE_STEPS = 20;
 
 function getNextLevel(level: string) {
@@ -83,10 +87,7 @@ export default function DashboardPage() {
 
         setVisibleStepsCount((prev) => {
             const minimumVisible = Math.max(STEP_CHUNK_SIZE, prev);
-            return Math.min(
-                minimumVisible,
-                Math.min(selectedPlan.tasks.length, MAX_VISIBLE_STEPS)
-            );
+            return Math.min(minimumVisible, Math.min(selectedPlan.tasks.length, MAX_VISIBLE_STEPS));
         });
     }, [selectedPlanId, selectedPlan]);
 
@@ -95,11 +96,9 @@ export default function DashboardPage() {
         return selectedPlan.tasks.slice(0, visibleStepsCount);
     }, [selectedPlan, visibleStepsCount]);
 
-
-    const allTwentyStepsVisible =
-        selectedPlan?.tasks.length
-            ? visibleStepsCount >= Math.min(selectedPlan.tasks.length, MAX_VISIBLE_STEPS)
-            : false;
+    const allTwentyStepsVisible = selectedPlan?.tasks.length
+        ? visibleStepsCount >= Math.min(selectedPlan.tasks.length, MAX_VISIBLE_STEPS)
+        : false;
 
     const nextLevel = selectedPlan ? getNextLevel(selectedPlan.level) : null;
 
@@ -121,8 +120,8 @@ export default function DashboardPage() {
 
         setPlans((prev) =>
             prev.map((plan) =>
-                plan.id === selectedPlan.id ? { ...plan, tasks: updatedTasks } : plan
-            )
+                plan.id === selectedPlan.id ? { ...plan, tasks: updatedTasks } : plan,
+            ),
         );
 
         try {
@@ -162,7 +161,10 @@ export default function DashboardPage() {
         if (!selectedPlan) return;
 
         setVisibleStepsCount((prev) =>
-            Math.min(prev + STEP_CHUNK_SIZE, Math.min(selectedPlan.tasks.length, MAX_VISIBLE_STEPS))
+            Math.min(
+                prev + STEP_CHUNK_SIZE,
+                Math.min(selectedPlan.tasks.length, MAX_VISIBLE_STEPS),
+            ),
         );
     };
 
@@ -244,7 +246,8 @@ export default function DashboardPage() {
                                                     {plan.goal}
                                                 </p>
                                                 <p className="mt-1 text-xs text-[var(--text-muted)]">
-                                                    {stats.completedCount}/{stats.totalCount} completed
+                                                    {stats.completedCount}/{stats.totalCount}{" "}
+                                                    completed
                                                 </p>
                                             </button>
 
@@ -275,14 +278,15 @@ export default function DashboardPage() {
                                 <h2 className="text-3xl font-bold">Checklist</h2>
 
                                 <div className="rounded-2xl bg-[var(--bg)] px-4 py-2 text-sm text-[var(--text-muted)]">
-                                    {selectedPlanStats.completedCount} of {selectedPlanStats.totalCount} done
+                                    {selectedPlanStats.completedCount} of{" "}
+                                    {selectedPlanStats.totalCount} done
                                 </div>
                             </div>
 
                             <div className="mt-6 space-y-4">
                                 {visibleTasks.map((task) => {
                                     const actualIndex = selectedPlan.tasks.findIndex(
-                                        (item) => item.day === task.day
+                                        (item) => item.day === task.day,
                                     );
 
                                     return (
@@ -306,7 +310,9 @@ export default function DashboardPage() {
 
                                                         <p
                                                             className={`mt-2 ${
-                                                                task.completed ? "line-through opacity-60" : ""
+                                                                task.completed
+                                                                    ? "line-through opacity-60"
+                                                                    : ""
                                                             }`}
                                                         >
                                                             {task.title}

@@ -1,16 +1,16 @@
 "use client";
 
-import {useEffect, useRef, useState} from "react";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { useAuthUser } from "@/hooks/useAuthUser";
+import { logout } from "@/lib/services/auth.service";
+import { LayoutDashboard, LogOut, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 import Link from "next/link";
-import {useTheme} from "next-themes";
-import {LayoutDashboard, LogOut, Moon, Sun} from "lucide-react";
-import {ThemeToggle} from "@/components/ui/theme-toggle";
-import {logout} from "@/lib/services/auth.service";
-import {useAuthUser} from "@/hooks/useAuthUser";
+import { useEffect, useRef, useState } from "react";
 
 export function Header() {
     const user = useAuthUser();
-    const {theme, setTheme} = useTheme();
+    const { theme, setTheme } = useTheme();
 
     const [open, setOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -69,38 +69,52 @@ export function Header() {
                                                         className="text-orange-600 dark:text-orange-300"
                                                     />
                                                 </span>
-                                                <span className="header-menu-item-label">Dashboard</span>
+                                                <span className="header-menu-item-label">
+                                                    Dashboard
+                                                </span>
                                             </div>
                                         </Link>
 
                                         <div
                                             className="header-menu-item"
-                                            onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
+                                            onClick={() =>
+                                                setTheme(currentTheme === "dark" ? "light" : "dark")
+                                            }
                                             role="button"
                                             tabIndex={0}
                                             onKeyDown={(e) => {
                                                 if (e.key === "Enter" || e.key === " ") {
-                                                    setTheme(currentTheme === "dark" ? "light" : "dark");
+                                                    setTheme(
+                                                        currentTheme === "dark" ? "light" : "dark",
+                                                    );
                                                 }
                                             }}
                                         >
                                             <div className="header-menu-item-left">
                                                 <span className="inline-flex h-7 w-7 items-center justify-center rounded-xl bg-gradient-to-br from-slate-500/20 to-indigo-500/20 ring-1 ring-indigo-500/20">
                                                     {currentTheme === "dark" ? (
-                                                        <Moon size={16} className="text-indigo-600 dark:text-indigo-300" />
+                                                        <Moon
+                                                            size={16}
+                                                            className="text-indigo-600 dark:text-indigo-300"
+                                                        />
                                                     ) : (
-                                                        <Sun size={16} className="text-amber-600 dark:text-amber-300" />
+                                                        <Sun
+                                                            size={16}
+                                                            className="text-amber-600 dark:text-amber-300"
+                                                        />
                                                     )}
                                                 </span>
                                                 <span className="header-menu-item-label">
-                     {currentTheme === "dark" ? "Dark mode" : "Light mode"}
-        </span>
+                                                    {currentTheme === "dark"
+                                                        ? "Dark mode"
+                                                        : "Light mode"}
+                                                </span>
                                             </div>
 
-                                            <ThemeToggle/>
+                                            <ThemeToggle />
                                         </div>
 
-                                        <div className="header-menu-divider"/>
+                                        <div className="header-menu-divider" />
 
                                         <button
                                             type="button"
@@ -112,42 +126,54 @@ export function Header() {
                                         >
                                             <div className="header-menu-item-left">
                                                 <span className="inline-flex h-7 w-7 items-center justify-center rounded-xl bg-gradient-to-br from-rose-500/15 to-red-500/15 ring-1 ring-red-500/20">
-                                                    <LogOut size={16} className="text-red-600 dark:text-red-300" />
+                                                    <LogOut
+                                                        size={16}
+                                                        className="text-red-600 dark:text-red-300"
+                                                    />
                                                 </span>
-                                                <span className="header-menu-item-label">Logout</span>
+                                                <span className="header-menu-item-label">
+                                                    Logout
+                                                </span>
                                             </div>
                                         </button>
                                     </div>
-                                </div>)}
+                                </div>
+                            )}
                         </>
                     ) : (
                         <>
-                           <div
-                                            className="header-menu-item"
-                                            onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
-                                            role="button"
-                                            tabIndex={0}
-                                            onKeyDown={(e) => {
-                                                if (e.key === "Enter" || e.key === " ") {
-                                                    setTheme(currentTheme === "dark" ? "light" : "dark");
-                                                }
-                                            }}
-                                        >
-                                            <div className="header-menu-item-left">
-                                                <span className="inline-flex h-7 w-7 items-center justify-center rounded-xl bg-gradient-to-br from-slate-500/20 to-indigo-500/20 ring-1 ring-indigo-500/20">
-                                                    {currentTheme === "dark" ? (
-                                                        <Moon size={16} className="text-indigo-600 dark:text-indigo-300" />
-                                                    ) : (
-                                                        <Sun size={16} className="text-amber-600 dark:text-amber-300" />
-                                                    )}
-                                                </span>
-                                                <span className="header-menu-item-label">
-                     {currentTheme === "dark" ? "Dark mode" : "Light mode"}
-        </span>
-                                            </div>
+                            <div
+                                className="header-menu-item"
+                                onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
+                                role="button"
+                                tabIndex={0}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter" || e.key === " ") {
+                                        setTheme(currentTheme === "dark" ? "light" : "dark");
+                                    }
+                                }}
+                            >
+                                <div className="header-menu-item-left">
+                                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-xl bg-gradient-to-br from-slate-500/20 to-indigo-500/20 ring-1 ring-indigo-500/20">
+                                        {currentTheme === "dark" ? (
+                                            <Moon
+                                                size={16}
+                                                className="text-indigo-600 dark:text-indigo-300"
+                                            />
+                                        ) : (
+                                            <Sun
+                                                size={16}
+                                                className="text-amber-600 dark:text-amber-300"
+                                            />
+                                        )}
+                                    </span>
+                                    <span className="header-menu-item-label">
+                                        {currentTheme === "dark" ? "Dark mode" : "Light mode"}
+                                    </span>
+                                </div>
 
-                                            {/* <ThemeToggle/> */}
-                                        </div>
+                                {/* <ThemeToggle/> */}
+                            </div>
 
                             <Link
                                 href="/login"

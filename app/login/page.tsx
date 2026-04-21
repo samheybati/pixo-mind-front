@@ -1,14 +1,14 @@
 "use client";
 
-import {useEffect, useState} from "react";
-import {useRouter} from "next/navigation";
+import { useAuthUser } from "@/hooks/useAuthUser";
 import {
     handleGoogleRedirectResult,
     loginWithGooglePopup,
     loginWithGoogleRedirect,
 } from "@/lib/services/auth.service";
-import {saveUserToFirestore} from "@/lib/services/users.service";
-import {useAuthUser} from "@/hooks/useAuthUser";
+import { saveUserToFirestore } from "@/lib/services/users.service";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -32,8 +32,7 @@ export default function LoginPage() {
                 }
             } catch (err: unknown) {
                 console.error(err);
-                const message =
-                    err instanceof Error ? err.message : "Login failed";
+                const message = err instanceof Error ? err.message : "Login failed";
                 setError(message);
             }
         }
@@ -77,9 +76,7 @@ export default function LoginPage() {
                     <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[var(--primary)]">
                         HabitForge
                     </p>
-                    <h1 className="mt-3 text-3xl font-bold text-[var(--text)]">
-                        Sign in
-                    </h1>
+                    <h1 className="mt-3 text-3xl font-bold text-[var(--text)]">Sign in</h1>
                     <p className="mt-2 text-sm text-[var(--text-muted)]">
                         Continue with your Google account
                     </p>
@@ -94,9 +91,7 @@ export default function LoginPage() {
                     {loading ? "Signing in..." : "Sign in with Google"}
                 </button>
 
-                {error ? (
-                    <p className="mt-4 text-center text-sm text-red-500">{error}</p>
-                ) : null}
+                {error ? <p className="mt-4 text-center text-sm text-red-500">{error}</p> : null}
             </div>
         </main>
     );
