@@ -24,7 +24,7 @@ function getNextLevel(level: string) {
 
 export default function DashboardPage() {
     const router = useRouter();
-    const user = useAuthUser();
+    const { user, loading: isLoadingAuth } = useAuthUser();
 
     const [plans, setPlans] = useState<LoadedPlan[]>([]);
     const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
@@ -32,7 +32,6 @@ export default function DashboardPage() {
     const [savingTaskIndex, setSavingTaskIndex] = useState<number | null>(null);
     const [visibleStepsCount, setVisibleStepsCount] = useState(STEP_CHUNK_SIZE);
 
-    const isLoadingAuth = user === undefined;
     const isAuthenticated = !!user;
 
     useEffect(() => {

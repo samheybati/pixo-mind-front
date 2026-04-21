@@ -9,8 +9,8 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 export function Header() {
-    const user = useAuthUser();
-    const { theme, setTheme } = useTheme();
+    const { user } = useAuthUser();
+    const { resolvedTheme, setTheme } = useTheme();
 
     const [open, setOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -26,16 +26,16 @@ export function Header() {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    const currentTheme = theme ?? "light";
+    const currentTheme = (resolvedTheme ?? "light") as "light" | "dark";
 
     return (
         <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--card)]/80 backdrop-blur">
             <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
                 <Link
                     href="/"
-                    className="text-sm font-semibold uppercase tracking-[0.25em] text-[var(--primary)]"
+                    className="text-sm font-comic font-semibold uppercase tracking-[0.25em] text-[var(--primary)]"
                 >
-                    HabitForge
+                    Pixo Mind
                 </Link>
 
                 <div className="relative flex items-center gap-3" ref={dropdownRef}>
@@ -92,22 +92,22 @@ export function Header() {
                                         >
                                             <div className="header-menu-item-left">
                                                 <span className="inline-flex h-7 w-7 items-center justify-center rounded-xl bg-gradient-to-br from-slate-500/20 to-indigo-500/20 ring-1 ring-indigo-500/20">
-                                                    {currentTheme === "dark" ? (
-                                                        <Moon
-                                                            size={16}
-                                                            className="text-indigo-600 dark:text-indigo-300"
-                                                        />
-                                                    ) : (
-                                                        <Sun
-                                                            size={16}
-                                                            className="text-amber-600 dark:text-amber-300"
-                                                        />
-                                                    )}
+                                                    <Moon
+                                                        size={16}
+                                                        className="hidden text-indigo-600 dark:block dark:text-indigo-300"
+                                                    />
+                                                    <Sun
+                                                        size={16}
+                                                        className="block text-amber-600 dark:hidden dark:text-amber-300"
+                                                    />
                                                 </span>
                                                 <span className="header-menu-item-label">
-                                                    {currentTheme === "dark"
-                                                        ? "Dark mode"
-                                                        : "Light mode"}
+                                                    <span className="hidden dark:inline">
+                                                        Dark mode
+                                                    </span>
+                                                    <span className="inline dark:hidden">
+                                                        Light mode
+                                                    </span>
                                                 </span>
                                             </div>
 
@@ -155,20 +155,18 @@ export function Header() {
                             >
                                 <div className="header-menu-item-left">
                                     <span className="inline-flex h-7 w-7 items-center justify-center rounded-xl bg-gradient-to-br from-slate-500/20 to-indigo-500/20 ring-1 ring-indigo-500/20">
-                                        {currentTheme === "dark" ? (
-                                            <Moon
-                                                size={16}
-                                                className="text-indigo-600 dark:text-indigo-300"
-                                            />
-                                        ) : (
-                                            <Sun
-                                                size={16}
-                                                className="text-amber-600 dark:text-amber-300"
-                                            />
-                                        )}
+                                        <Moon
+                                            size={16}
+                                            className="hidden text-indigo-600 dark:block dark:text-indigo-300"
+                                        />
+                                        <Sun
+                                            size={16}
+                                            className="block text-amber-600 dark:hidden dark:text-amber-300"
+                                        />
                                     </span>
                                     <span className="header-menu-item-label">
-                                        {currentTheme === "dark" ? "Dark mode" : "Light mode"}
+                                        <span className="hidden dark:inline">Dark mode</span>
+                                        <span className="inline dark:hidden">Light mode</span>
                                     </span>
                                 </div>
 

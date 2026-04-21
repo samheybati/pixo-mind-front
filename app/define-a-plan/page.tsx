@@ -12,7 +12,7 @@ type PlanLevel = "beginner" | "intermediate" | "advanced";
 
 export default function DefineAPlanPage() {
     const router = useRouter();
-    const user = useAuthUser();
+    const { user, loading: isLoadingAuth } = useAuthUser();
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -25,12 +25,12 @@ export default function DefineAPlanPage() {
     }, [title, description]);
 
     useEffect(() => {
-        if (user === undefined) return;
+        if (isLoadingAuth) return;
 
         if (user === null) {
             router.replace("/login");
         }
-    }, [user, router]);
+    }, [isLoadingAuth, user, router]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -102,16 +102,17 @@ export default function DefineAPlanPage() {
                 <div className="mb-8">
                     <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--primary)]">
                         <Sparkles size={14} />
-                        Define a plan
+                        Define your challenge
                     </div>
 
                     <h1 className="mt-5 text-3xl font-bold sm:text-4xl">
-                        Create your next habit plan
+                        Build a habit you can keep
                     </h1>
 
                     <p className="mt-3 max-w-2xl leading-8 text-[var(--text-muted)]">
-                        Give your plan a clear title, explain what you want to achieve, and
-                        HabitForge will turn it into structured daily steps you can actually follow.
+                        Name the habit you want to lock in, describe what “success” looks like, and
+                        Pixo Mind will turn it into structured steps you can follow daily — with AI
+                        or your own rules.
                     </p>
                 </div>
 

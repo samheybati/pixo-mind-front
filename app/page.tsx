@@ -9,14 +9,14 @@ import { useAuthUser } from "@/hooks/useAuthUser";
 
 export default function HomePage() {
     const router = useRouter();
-    const user = useAuthUser();
+    const { user, loading } = useAuthUser();
 
     useEffect(() => {
-        if (!user) return;
+        if (loading || !user) return;
         router.replace("/dashboard");
-    }, [user, router]);
+    }, [loading, user, router]);
 
-    if (user) {
+    if (loading || user) {
         return (
             <main className="px-6 py-10">
                 <div className="mx-auto max-w-7xl">Redirecting to dashboard...</div>
@@ -34,19 +34,21 @@ export default function HomePage() {
                     <div>
                         <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--bg)] px-4 py-2 text-sm text-[var(--primary)]">
                             <Sparkles size={14} />
-                            AI habit building with streaks and XP
+                            AI-powered habit plans + self-made challenges
                         </div>
 
                         <h1 className="text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl">
-                            Build a habit in
+                            Make one habit
                             <span className="block bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent dark:from-orange-400 dark:to-amber-300">
-                                60 focused days
+                                stick for real life
                             </span>
                         </h1>
 
                         <p className="mt-5 max-w-2xl leading-8 text-[var(--text-muted)]">
-                            HabitForge turns a vague goal into a clear plan you can actually follow.
-                            We guide you through three growth levels:
+                            Pixo Mind turns a vague goal into a challenge you can actually keep. Use
+                            AI to generate a clean step-by-step plan, or build your own daily
+                            challenge and track it with momentum. We guide you through three growth
+                            levels:
                             <span className="mx-1 font-semibold text-[var(--text)]">beginner</span>,
                             <span className="mx-1 font-semibold text-[var(--text)]">
                                 intermediate
@@ -97,7 +99,7 @@ export default function HomePage() {
                                 href="/define-a-plan"
                                 className="rounded-2xl border border-[var(--border)] bg-[var(--bg)] px-6 py-3.5 text-center font-semibold text-[var(--text)] transition hover:bg-white/70 dark:hover:bg-white/10"
                             >
-                                Explore the plan flow
+                                Try the AI plan flow
                             </Link>
                         </div>
 
