@@ -1,5 +1,5 @@
 import {getAI, getGenerativeModel, GoogleAIBackend} from "firebase/ai";
-import {app} from "@/lib/firebase";
+import {app} from "@/lib/firebase/client";
 
 const ai = getAI(app, {backend: new GoogleAIBackend()});
 
@@ -54,11 +54,11 @@ function extractJson(text: string) {
 }
 
 export async function generateLevelPlan({
-                                             title,
-                                             description,
-                                             timePerDay,
-                                             level,
-                                         }: GeneratePlanParams): Promise<GeneratedPlan> {
+    title,
+    description,
+    timePerDay,
+    level,
+}: GeneratePlanParams): Promise<GeneratedPlan> {
     const prompt = `
 You are an expert habit coach and motivational guide.
 
@@ -181,3 +181,4 @@ Use this JSON shape exactly:
         throw new Error("AI returned invalid JSON");
     }
 }
+

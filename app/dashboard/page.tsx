@@ -4,16 +4,12 @@ import {useEffect, useMemo, useState} from "react";
 import {useRouter} from "next/navigation";
 import {Trash2} from "lucide-react";
 
-import {deletePlanForUser, getPlansForUser, updateTaskCompletion,} from "@/lib/plans";
+import {deletePlanForUser, getPlansForUser, updateTaskCompletion} from "@/lib/services/plans.service";
 import {useAuthUser} from "@/hooks/useAuthUser";
-
-import OverallConsistencyCard from "@/components/dashboard/OverallConsistencyCard";
-import SelectedPlanDetailsCard from "@/components/dashboard/SelectedPlanDetailsCard";
-
-import type {LoadedPlan} from "@/types/plan";
-import {getPlanStats, XP_PER_TASK} from "@/utils/plan";
-
-const STEP_CHUNK_SIZE = 5;
+import type {LoadedPlan} from "@/features/plans/types/plan";
+import {getPlanStats, STEP_CHUNK_SIZE, XP_PER_TASK} from "@/features/plans/utils/plan";
+import OverallConsistencyCard from "@/app/dashboard/components/OverallConsistencyCard";
+import SelectedPlanDetailsCard from "@/app/dashboard/components/SelectedPlanDetailsCard";
 const MAX_VISIBLE_STEPS = 20;
 
 function getNextLevel(level: string) {

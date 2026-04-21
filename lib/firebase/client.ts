@@ -9,7 +9,7 @@ const firebaseConfig = {
     storageBucket: "habit-forge-samin.firebasestorage.app",
     messagingSenderId: "126681327345",
     appId: "1:126681327345:web:270590a26107857e212b50",
-    measurementId: "G-DBKRJ4REGC"
+    measurementId: "G-DBKRJ4REGC",
 };
 
 export const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
@@ -21,3 +21,4 @@ export const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
     prompt: "select_account",
 });
+

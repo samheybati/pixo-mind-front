@@ -1,5 +1,11 @@
-import {getRedirectResult, signInWithPopup, signInWithRedirect, signOut,} from "firebase/auth";
-import {auth, googleProvider} from "./firebase";
+import {
+    getRedirectResult,
+    signInWithPopup,
+    signInWithRedirect,
+    signOut,
+} from "firebase/auth";
+
+import {auth, googleProvider} from "@/lib/firebase/client";
 
 export async function loginWithGooglePopup() {
     return signInWithPopup(auth, googleProvider);
@@ -16,3 +22,4 @@ export async function handleGoogleRedirectResult() {
 export async function logout() {
     return signOut(auth);
 }
+

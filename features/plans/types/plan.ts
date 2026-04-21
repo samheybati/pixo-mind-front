@@ -27,3 +27,4 @@ export type CreatePlanInput = {
     level: PlanLevel;
     tasks: PlanTask[];
 };
+

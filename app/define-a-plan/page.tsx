@@ -4,9 +4,9 @@ import {useEffect, useMemo, useState} from "react";
 import {useRouter} from "next/navigation";
 import {Sparkles} from "lucide-react";
 
-import {savePlanForUser} from "@/lib/plans";
+import {generateLevelPlan} from "@/lib/ai/client";
+import {savePlanForUser} from "@/lib/services/plans.service";
 import {useAuthUser} from "@/hooks/useAuthUser";
-import {generateLevelPlan} from "@/lib/ai";
 
 type PlanLevel = "beginner" | "intermediate" | "advanced";
 

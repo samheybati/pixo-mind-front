@@ -1,4 +1,4 @@
-import type { LoadedPlan } from "@/types/plan";
+import type {LoadedPlan} from "../types/plan";
 
 export const XP_PER_TASK = 10;
 export const STEP_CHUNK_SIZE = 5;
@@ -66,3 +66,4 @@ export function getPlanStats(plan: LoadedPlan) {
         visibleTasks,
     };
 }
+

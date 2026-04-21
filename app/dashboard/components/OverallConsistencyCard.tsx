@@ -2,17 +2,20 @@
 
 import {CircleCheckBig} from "lucide-react";
 
-import {formatLongToday, formatShortDate, getTotalXp, isToday, XP_PER_TASK,} from "@/utils/plan";
-import {LoadedPlan} from "@/types/plan";
-
+import type {LoadedPlan} from "@/features/plans/types/plan";
+import {
+    formatLongToday,
+    formatShortDate,
+    getTotalXp,
+    isToday,
+    XP_PER_TASK,
+} from "@/features/plans/utils/plan";
 
 type OverallConsistencyCardProps = {
     plans: LoadedPlan[];
 };
 
-export default function OverallConsistencyCard({
-                                                   plans,
-                                               }: OverallConsistencyCardProps) {
+export default function OverallConsistencyCard({plans}: OverallConsistencyCardProps) {
     const allTasks = plans.flatMap((plan) =>
         plan.tasks.map((task) => ({
             ...task,
@@ -110,3 +113,4 @@ export default function OverallConsistencyCard({
         </div>
     );
 }
+

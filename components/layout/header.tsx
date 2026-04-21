@@ -4,8 +4,8 @@ import {useEffect, useRef, useState} from "react";
 import Link from "next/link";
 import {useTheme} from "next-themes";
 import {LayoutDashboard, LogOut, Moon, Sun} from "lucide-react";
-import {ThemeToggle} from "@/components/theme-toggle";
-import {logout} from "@/lib/auth";
+import {ThemeToggle} from "@/components/ui/theme-toggle";
+import {logout} from "@/lib/services/auth.service";
 import {useAuthUser} from "@/hooks/useAuthUser";
 
 export function Header() {

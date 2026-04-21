@@ -2,8 +2,12 @@
 
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
-import {handleGoogleRedirectResult, loginWithGooglePopup, loginWithGoogleRedirect,} from "@/lib/auth";
-import {saveUserToFirestore} from "@/lib/users";
+import {
+    handleGoogleRedirectResult,
+    loginWithGooglePopup,
+    loginWithGoogleRedirect,
+} from "@/lib/services/auth.service";
+import {saveUserToFirestore} from "@/lib/services/users.service";
 import {useAuthUser} from "@/hooks/useAuthUser";
 
 export default function LoginPage() {

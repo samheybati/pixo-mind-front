@@ -1,6 +1,7 @@
 import {doc, getDoc, serverTimestamp, setDoc} from "firebase/firestore";
-import {db} from "./firebase";
-import {User} from "firebase/auth";
+import type {User} from "firebase/auth";
+
+import {db} from "@/lib/firebase/client";
 
 export async function saveUserToFirestore(user: User) {
     const userRef = doc(db, "users", user.uid);
@@ -28,3 +29,4 @@ export async function saveUserToFirestore(user: User) {
 
     await setDoc(userRef, baseData, {merge: true});
 }
+

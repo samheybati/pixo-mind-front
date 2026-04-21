@@ -2,8 +2,8 @@
 
 import {CheckCircle2, Clock3, Sparkles, Trophy} from "lucide-react";
 
-import {formatShortDate, getPlanStats, XP_PER_TASK} from "@/utils/plan";
-import {LoadedPlan} from "@/types/plan";
+import type {LoadedPlan} from "@/features/plans/types/plan";
+import {formatShortDate, getPlanStats, XP_PER_TASK} from "@/features/plans/utils/plan";
 
 type SelectedPlanDetailsCardProps = {
     planId: string | null;
@@ -11,9 +11,9 @@ type SelectedPlanDetailsCardProps = {
 };
 
 export default function SelectedPlanDetailsCard({
-                                                    planId,
-                                                    plans,
-                                                }: SelectedPlanDetailsCardProps) {
+    planId,
+    plans,
+}: SelectedPlanDetailsCardProps) {
     const selectedPlan = plans.find((plan) => plan.id === planId);
 
     if (!selectedPlan) {
@@ -42,8 +42,6 @@ export default function SelectedPlanDetailsCard({
                 className="absolute inset-0 -z-10 bg-gradient-to-br from-[var(--primary)]/5 via-transparent to-orange-400/5"/>
 
             <div className="mb-6">
-                {/*<p className="text-sm text-[var(--text-muted)]">Selected plan details</p>*/}
-
                 <h3 className="mt-2 text-3xl font-bold capitalize text-[var(--primary)]">
                     {selectedPlan.goal}
                 </h3>
@@ -109,3 +107,4 @@ export default function SelectedPlanDetailsCard({
         </div>
     );
 }
+
