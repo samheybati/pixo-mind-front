@@ -4,17 +4,6 @@ import type { Metadata } from "next";
 import { Inter, Sora } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-    subsets: ["latin"],
-    variable: "--font-sans",
-    display: "swap",
-});
-
-const sora = Sora({
-    subsets: ["latin"],
-    variable: "--font-sora",
-    display: "swap",
-});
 
 export const metadata: Metadata = {
     title: "Pixo Mind",
@@ -30,12 +19,12 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <body
-                className={`${inter.variable} ${sora.variable} bg-[var(--bg)] text-[var(--text)] antialiased`}
+                className={`bg-[var(--bg)] text-[var(--text)] antialiased`}
             >
                 <ThemeProvider>
-                    <div className="flex min-h-dvh flex-col">
+                    <div className="flex h-dvh flex-col overflow-hidden">
                         <Header />
-                        <div className="flex-1">{children}</div>
+                        <div className="flex-1 overflow-auto">{children}</div>
                     </div>
                 </ThemeProvider>
             </body>

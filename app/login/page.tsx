@@ -166,15 +166,15 @@ export default function LoginPage() {
                 : "Continue with Google";
 
     return (
-        <main className="relative flex min-h-[calc(100dvh-4rem)] items-center justify-center overflow-hidden bg-[var(--bg)] px-6 py-8">
-            <div className="pointer-events-none absolute inset-0">
-                <div className="absolute left-1/2 top-0 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[var(--primary)]/15 blur-3xl" />
-                <div className="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-white/5 blur-3xl" />
-                <div className="absolute right-0 top-1/3 h-80 w-80 rounded-full bg-[var(--primary)]/10 blur-3xl" />
+        <main className="glass-page">
+            <div className="ambient-blobs" aria-hidden="true">
+                <div className="ambient-blob ambient-blob--top" />
+                <div className="ambient-blob ambient-blob--bottom-left" />
+                <div className="ambient-blob ambient-blob--right" />
             </div>
 
-            <div className="relative grid w-full max-w-5xl overflow-hidden rounded-[32px] border border-white/10 bg-white/5 shadow-2xl backdrop-blur-xl md:grid-cols-2">
-                <section className="hidden flex-col justify-between bg-[linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02))] p-10 md:flex">
+            <div className="glass-shell">
+                <section className="glass-shell-hero">
                     <div>
                         <h1 className="max-w-sm text-4xl font-bold leading-tight text-[var(--text)] font-comic">
                             Lock one habit into your daily life
@@ -188,14 +188,14 @@ export default function LoginPage() {
                     </div>
 
                     <div className="mt-6 grid gap-4">
-                        <div className="rounded-3xl border border-white/10 bg-[var(--card)]/70 p-5 shadow-xl backdrop-blur-sm">
+                        <div className="glass-card p-5">
                             <p className="text-sm font-semibold text-[var(--text)]">Daily focus</p>
                             <p className="mt-1 text-sm text-[var(--text-muted)]">
                                 Keep one clear habit front-and-center so it actually sticks.
                             </p>
                         </div>
 
-                        <div className="rounded-3xl border border-white/10 bg-[var(--card)]/70 p-5 shadow-xl backdrop-blur-sm">
+                        <div className="glass-card p-5">
                             <p className="text-sm font-semibold text-[var(--text)]">
                                 AI or self-made challenge
                             </p>
@@ -204,7 +204,7 @@ export default function LoginPage() {
                             </p>
                         </div>
 
-                        <div className="rounded-3xl border border-white/10 bg-[var(--card)]/70 p-5 shadow-xl backdrop-blur-sm">
+                        <div className="glass-card p-5">
                             <p className="text-sm font-semibold text-[var(--text)]">
                                 Momentum that compounds
                             </p>
@@ -228,7 +228,7 @@ export default function LoginPage() {
                             </p>
                         </div>
 
-                        <div className="rounded-3xl border border-white/10 bg-[var(--card)]/70 p-5 shadow-xl backdrop-blur-sm">
+                        <div className="glass-card p-5">
                             <button
                                 type="button"
                                 onClick={handleGoogleLogin}

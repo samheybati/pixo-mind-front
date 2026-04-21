@@ -25,6 +25,8 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 body {
@@ -37,6 +39,105 @@ button {
 
 button:disabled {
     cursor: not-allowed;
+}
+
+/* =========================
+   Shared "glass" layouts
+========================= */
+
+.glass-page {
+    position: relative;
+    display: flex;
+    /* min-height: calc(100dvh - 4rem); */
+    height: calc(100dvh - 5rem);
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--bg);
+    padding: 2rem 1.5rem;
+    box-sizing: border-box;
+}
+
+.ambient-blobs {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+}
+
+.ambient-blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(64px);
+}
+
+.ambient-blob--top {
+    left: 50%;
+    top: 0;
+    height: 420px;
+    width: 420px;
+    transform: translateX(-50%);
+    background: color-mix(in srgb, var(--primary) 15%, transparent);
+}
+
+.ambient-blob--bottom-left {
+    bottom: 0;
+    left: 0;
+    height: 288px;
+    width: 288px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.ambient-blob--right {
+    right: 0;
+    top: 33%;
+    height: 320px;
+    width: 320px;
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+.glass-shell {
+    position: relative;
+    width: 100%;
+    max-width: 80rem; /* ~ max-w-5xl */
+    overflow: hidden;
+    border-radius: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(24px);
+}
+
+@media (min-width: 768px) {
+    .glass-shell {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.glass-shell-hero {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2.5rem;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.08),
+        rgba(255, 255, 255, 0.02)
+    );
+}
+
+@media (min-width: 768px) {
+    .glass-shell-hero {
+        display: flex;
+    }
+}
+
+.glass-card {
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: color-mix(in srgb, var(--card) 70%, transparent);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(12px);
 }
 
 /* =========================
