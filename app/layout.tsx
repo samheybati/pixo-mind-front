@@ -1,9 +1,7 @@
 import { Header } from "@/components/layout/header";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import type { Metadata } from "next";
-import { Inter, Sora } from "next/font/google";
 import "./globals.css";
-
 
 export const metadata: Metadata = {
     title: "Pixo Mind",
@@ -18,9 +16,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body
-                className={`bg-[var(--bg)] text-[var(--text)] antialiased`}
-            >
+            <body className={`bg-[var(--bg)] text-[var(--text)] antialiased`}>
                 <ThemeProvider>
                     <div className="flex h-dvh flex-col overflow-hidden">
                         <Header />

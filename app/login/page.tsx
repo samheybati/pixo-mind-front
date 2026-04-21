@@ -176,27 +176,25 @@ export default function LoginPage() {
             <div className="glass-shell">
                 <section className="glass-shell-hero">
                     <div>
-                        <h1 className="max-w-sm text-4xl font-bold leading-tight text-[var(--text)] font-comic">
+                        <h1 className="max-w-sm text-xl font-bold leading-tight text-[var(--text)] font-comfortaa">
                             Lock one habit into your daily life
                         </h1>
 
                         <p className="mt-2 max-w-md text-sm leading-7 text-[var(--text-muted)]">
-                            Pick one habit you want to fix in your everyday routine. Get an AI plan
-                            in minutes, or create your own challenge — then track it daily until it
-                            becomes automatic.
+                        Plan it. Track it. Make it stick.
                         </p>
                     </div>
 
                     <div className="mt-6 grid gap-4">
                         <div className="glass-card p-5">
-                            <p className="text-sm font-semibold text-[var(--text)]">Daily focus</p>
+                            <p className="text-[var(--text)] font-comfortaa">Daily focus</p>
                             <p className="mt-1 text-sm text-[var(--text-muted)]">
                                 Keep one clear habit front-and-center so it actually sticks.
                             </p>
                         </div>
 
                         <div className="glass-card p-5">
-                            <p className="text-sm font-semibold text-[var(--text)]">
+                            <p className="text-[var(--text)] font-comfortaa">
                                 AI or self-made challenge
                             </p>
                             <p className="mt-1 text-sm text-[var(--text-muted)]">
@@ -205,7 +203,7 @@ export default function LoginPage() {
                         </div>
 
                         <div className="glass-card p-5">
-                            <p className="text-sm font-semibold text-[var(--text)]">
+                            <p className="text-[var(--text)]">
                                 Momentum that compounds
                             </p>
                             <p className="mt-1 text-sm text-[var(--text-muted)]">
@@ -218,7 +216,7 @@ export default function LoginPage() {
                 <section className="flex items-center justify-center px-6 py-10 sm:px-10">
                     <div className="w-full max-w-md">
                         <div className="mb-8 text-center md:text-left">
-                            <h2 className="mt-3 text-3xl font-bold text-[var(--text)] font-comic">
+                            <h2 className="mt-3 text-3xl font-bold text-[var(--text)] font-comfortaa">
                                 Welcome to Pixo Mind
                             </h2>
 
@@ -233,7 +231,7 @@ export default function LoginPage() {
                                 type="button"
                                 onClick={handleGoogleLogin}
                                 disabled={isBusy}
-                                className="group flex w-full items-center justify-center gap-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] px-4 py-3.5 font-semibold text-[var(--text)] shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-[var(--card)] hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70"
+                                className="group flex w-full items-center justify-center gap-3 rounded-2xl border border-[var(--border)] px-4 py-3.5 text-[var(--text)] shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70"
                             >
                                 {isBusy ? (
                                     <span className="flex items-center gap-3">
