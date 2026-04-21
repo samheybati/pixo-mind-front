@@ -7,6 +7,7 @@ import {
     loginWithGoogleRedirect,
 } from "@/lib/services/auth.service";
 import { saveUserToFirestore } from "@/lib/services/users.service";
+import type { User } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -15,6 +16,11 @@ export default function LoginPage() {
     const user = useAuthUser();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+
+    const finishLogin = async (user: User) => {
+        await saveUserToFirestore(user);
+        router.replace("/dashboard");
+    };
 
     useEffect(() => {
         if (user) {
@@ -26,9 +32,9 @@ export default function LoginPage() {
         async function checkRedirectResult() {
             try {
                 const result = await handleGoogleRedirectResult();
+
                 if (result?.user) {
-                    await saveUserToFirestore(result.user);
-                    router.push("/dashboard");
+                    await finishLogin(result.user);
                 }
             } catch (err: unknown) {
                 console.error(err);
@@ -46,18 +52,16 @@ export default function LoginPage() {
             setError("");
 
             const result = await loginWithGooglePopup();
-            await saveUserToFirestore(result.user);
-
-            router.push("/dashboard");
+            await finishLogin(result.user);
         } catch (err: unknown) {
             console.error(err);
 
-            if (
-                typeof err === "object" &&
-                err !== null &&
-                "code" in err &&
-                (err as { code?: unknown }).code === "auth/popup-blocked"
-            ) {
+            const code =
+                typeof err === "object" && err !== null && "code" in err
+                    ? (err as { code?: string }).code
+                    : undefined;
+
+            if (code === "auth/popup-blocked") {
                 await loginWithGoogleRedirect();
                 return;
             }
