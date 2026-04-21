@@ -37,6 +37,36 @@ body {
     font-family: "Comfortaa", cursive;
 }
 
+.icon-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    padding: 0;
+    border-radius: 9999px;
+    background: transparent;
+    cursor: pointer;
+    transition:
+        background-color 0.16s ease,
+        transform 0.12s ease,
+        opacity 0.16s ease;
+}
+
+.icon-toggle:hover {
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+.icon-toggle:active {
+    transform: scale(0.96);
+}
+
+.icon-toggle:focus-visible {
+    outline: 0;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 25%, transparent);
+}
+
 button {
     cursor: pointer;
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import { logout } from "@/lib/services/auth.service";
 import { LayoutDashboard, LogOut, Moon, Sun } from "lucide-react";
@@ -28,17 +27,34 @@ export function Header() {
 
     const currentTheme = (resolvedTheme ?? "light") as "light" | "dark";
 
+    const toggleTheme = () => setTheme(currentTheme === "dark" ? "light" : "dark");
+
     return (
         <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--card)]/80 backdrop-blur">
             <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
                 <Link
                     href="/"
-                    className="text-sm font-comic font-semibold uppercase tracking-[0.25em] text-[var(--primary)]"
+                    className="font-comfortaa font-semibold tracking-[0.25em] text-[var(--primary)]"
                 >
                     Pixo Mind
                 </Link>
 
                 <div className="relative flex items-center gap-3" ref={dropdownRef}>
+                    <button
+                        type="button"
+                        className="icon-toggle"
+                        onClick={toggleTheme}
+                        aria-label={
+                            currentTheme === "light" ? "Switch to dark mode" : "Switch to light mode"
+                        }
+                    >
+                        {currentTheme === "light" ? (
+                            <Moon size={18} className="text-indigo-600" />
+                        ) : (
+                            <Sun size={18} className="text-amber-500" />
+                        )}
+                    </button>
+
                     {user ? (
                         <>
                             <button
@@ -75,45 +91,6 @@ export function Header() {
                                             </div>
                                         </Link>
 
-                                        <div
-                                            className="header-menu-item"
-                                            onClick={() =>
-                                                setTheme(currentTheme === "dark" ? "light" : "dark")
-                                            }
-                                            role="button"
-                                            tabIndex={0}
-                                            onKeyDown={(e) => {
-                                                if (e.key === "Enter" || e.key === " ") {
-                                                    setTheme(
-                                                        currentTheme === "dark" ? "light" : "dark",
-                                                    );
-                                                }
-                                            }}
-                                        >
-                                            <div className="header-menu-item-left">
-                                                <span className="inline-flex h-7 w-7 items-center justify-center rounded-xl bg-gradient-to-br from-slate-500/20 to-indigo-500/20 ring-1 ring-indigo-500/20">
-                                                    <Moon
-                                                        size={16}
-                                                        className="hidden text-indigo-600 dark:block dark:text-indigo-300"
-                                                    />
-                                                    <Sun
-                                                        size={16}
-                                                        className="block text-amber-600 dark:hidden dark:text-amber-300"
-                                                    />
-                                                </span>
-                                                <span className="header-menu-item-label">
-                                                    <span className="hidden dark:inline">
-                                                        Dark mode
-                                                    </span>
-                                                    <span className="inline dark:hidden">
-                                                        Light mode
-                                                    </span>
-                                                </span>
-                                            </div>
-
-                                            <ThemeToggle />
-                                        </div>
-
                                         <div className="header-menu-divider" />
 
                                         <button
@@ -141,45 +118,12 @@ export function Header() {
                             )}
                         </>
                     ) : (
-                        <>
-                            <div
-                                className="header-menu-item"
-                                onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
-                                role="button"
-                                tabIndex={0}
-                                onKeyDown={(e) => {
-                                    if (e.key === "Enter" || e.key === " ") {
-                                        setTheme(currentTheme === "dark" ? "light" : "dark");
-                                    }
-                                }}
-                            >
-                                <div className="header-menu-item-left">
-                                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-xl bg-gradient-to-br from-slate-500/20 to-indigo-500/20 ring-1 ring-indigo-500/20">
-                                        <Moon
-                                            size={16}
-                                            className="hidden text-indigo-600 dark:block dark:text-indigo-300"
-                                        />
-                                        <Sun
-                                            size={16}
-                                            className="block text-amber-600 dark:hidden dark:text-amber-300"
-                                        />
-                                    </span>
-                                    <span className="header-menu-item-label">
-                                        <span className="hidden dark:inline">Dark mode</span>
-                                        <span className="inline dark:hidden">Light mode</span>
-                                    </span>
-                                </div>
-
-                                {/* <ThemeToggle/> */}
-                            </div>
-
-                            <Link
-                                href="/login"
-                                className="rounded-xl bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white hover:opacity-90"
-                            >
-                                Login
-                            </Link>
-                        </>
+                        <Link
+                            href="/login"
+                            className="rounded-xl bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white hover:opacity-90"
+                        >
+                            Login
+                        </Link>
                     )}
                 </div>
             </div>
