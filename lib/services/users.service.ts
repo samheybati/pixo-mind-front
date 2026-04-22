@@ -4,6 +4,7 @@ import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase/client";
 
 export async function saveUserToFirestore(user: User) {
+    
     const userRef = doc(db, "users", user.uid);
     const snap = await getDoc(userRef);
 

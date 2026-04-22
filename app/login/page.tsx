@@ -10,6 +10,7 @@ import { saveUserToFirestore } from "@/lib/services/users.service";
 import type { User } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+
 type LoginStatus = "checking" | "idle" | "loading" | "redirecting";
 
 function getAuthErrorMessage(err: unknown) {
@@ -27,6 +28,26 @@ function getAuthErrorMessage(err: unknown) {
             return "Network error. Please check your internet connection.";
         default:
             return err instanceof Error ? err.message : "Login failed. Please try again.";
+    }
+}
+
+function getFirestoreWriteErrorMessage(err: unknown) {
+    const code =
+        typeof err === "object" && err !== null && "code" in err
+            ? (err as { code?: string }).code
+            : undefined;
+
+    switch (code) {
+        case "permission-denied":
+            return "Signed in, but we couldn't save your profile (permission denied). Please contact support.";
+        case "unauthenticated":
+            return "Signed in, but we couldn't save your profile (not authenticated yet). Please retry.";
+        case "unavailable":
+            return "Signed in, but Firestore is temporarily unavailable. Please retry.";
+        default:
+            return err instanceof Error
+                ? `Signed in, but we couldn't save your profile: ${err.message}`
+                : "Signed in, but we couldn't save your profile. Please retry.";
     }
 }
 
@@ -75,7 +96,21 @@ export default function LoginPage() {
             if (hasFinishedLoginRef.current) return;
             hasFinishedLoginRef.current = true;
 
-            await saveUserToFirestore(authUser);
+            try {
+                console.log("Starting Firestore user save...");
+                console.log("Auth user uid:", authUser.uid);
+                console.log("Auth user email:", authUser.email);
+
+                await saveUserToFirestore(authUser);
+
+                console.log("User saved to Firestore successfully.");
+            } catch (err: unknown) {
+                console.error("Failed to save user to Firestore", err);
+                setError(getFirestoreWriteErrorMessage(err));
+                hasFinishedLoginRef.current = false;
+                setStatus("idle");
+                return;
+            }
 
             if (!hasNavigatedRef.current) {
                 hasNavigatedRef.current = true;
@@ -118,14 +153,6 @@ export default function LoginPage() {
             cancelled = true;
         };
     }, [finishLogin]);
-
-    useEffect(() => {
-        if (!user) return;
-        if (hasNavigatedRef.current) return;
-
-        hasNavigatedRef.current = true;
-        router.replace("/dashboard");
-    }, [user, router]);
 
     const handleGoogleLogin = async () => {
         try {
