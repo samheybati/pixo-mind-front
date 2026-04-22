@@ -1,9 +1,9 @@
 import { app } from "@/lib/firebase/client";
 import { getAI, getGenerativeModel, GoogleAIBackend } from "firebase/ai";
 
-import type { GeneratedPlan, GeneratePlanParams, IntakeQuestion } from "./types";
+import type { GeneratedPlan, GeneratePlanParams, IntakeQuestion,GeneratedPlanTask } from "./types";
 
-export type { GeneratedPlan, GeneratePlanParams, IntakeQuestion } from "./types";
+export type { GeneratedPlan, GeneratePlanParams, IntakeQuestion, } from "./types";
 
 const ai = getAI(app, { backend: new GoogleAIBackend() });
 
@@ -130,125 +130,121 @@ export async function generatePlan({
     timePerDay,
     intakeAnswers,
 }: GeneratePlanParams): Promise<GeneratedPlan> {
-    const intakeBlock =
-        intakeAnswers && intakeAnswers.length
-            ? `
-User answers to your intake questions:
+    const intakeBlock = intakeAnswers?.length
+        ? `
+User answers:
 ${intakeAnswers
-    .map((qa, idx) => `Q${idx + 1}: ${qa.question}\nA${idx + 1}: ${qa.answer}`)
+    .map((qa, idx) => `${idx + 1}. ${qa.question}\nAnswer: ${qa.answer}`)
     .join("\n\n")}
 `
-            : "";
+        : "";
 
-    const prompt = `
-You are an expert habit coach and motivational guide.
-
-Create a simple 3-step habit plan for this user.
-
-Plan title: ${title}
-
-User intention:
-${description}
-
-Daily time available: about ${timePerDay} minutes per day
-${intakeBlock}
-
-Requirements:
-- Write a short encouraging summary in 4 to 5 sentences.
-- Then create exactly 3 steps.
-- Each step must be realistic, actionable, beginner-friendly, and fit within the user's daily available time.
-- Focus on consistency, momentum, habit formation, and emotional encouragement, not intensity.
-- The plan should feel progressive across the 3 steps, starting easy and becoming slightly more intentional.
-- Each step should feel supportive, practical, and motivating.
-
-For each task, return:
-- "shortTitle": a very short UI-friendly label in 2 to 4 words
-- "title": a clear task title in 4 to 8 words
-- "description": a supportive and motivating explanation in 4 to 6 sentences
-
-Description rules:
-- The description must be a little longer, warm, and encouraging
-- Explain clearly what the user should do today
-- Briefly explain why this step matters
-- Use positive, natural, human language
-- Help the user feel that the task is manageable and worth doing
-- Avoid sounding robotic, repetitive, or too generic
-- Avoid repeating the exact same motivational sentence across tasks
--- Write the description in a tone that feels like a supportive coach speaking directly to the user
-
-Rules:
-- shortTitle must be concise and easy to scan in cards
-- title must be actionable
-- description must be practical, emotionally encouraging, and easy to understand
-- Return valid JSON only
-- Do not use markdown
-- Do not wrap the JSON in backticks
-
-Use this JSON shape exactly:
-{
-  "summary": "string",
-  "tasks": [
-    {
-      "day": 1,
-      "shortTitle": "string",
-      "title": "string",
-      "description": "string"
-    },
-    {
-      "day": 2,
-      "shortTitle": "string",
-      "title": "string",
-      "description": "string"
-    },
-    {
-      "day": 3,
-      "shortTitle": "string",
-      "title": "string",
-      "description": "string"
-    }
-  ]
-}
-`;
+        const prompt = `
+        You are an expert habit coach and motivational guide.
+        
+        Create a simple 10-day habit plan for this user.
+        
+        Plan title: ${title}
+        
+        User intention:
+        ${description}
+        
+        Daily time available: about ${timePerDay} minutes per day
+        ${intakeBlock}
+        
+        Requirements:
+        - Write a short encouraging summary in 4 to 5 sentences.
+        - Create exactly 10 steps, one for each day.
+        - Each step must describe what the user should do on that day.
+        - Each task must fit within the user's daily available time.
+        - DO NOT mention or suggest any specific number of minutes or time duration in the description.
+        - DO NOT use phrases like "for 10 minutes", "for 30 minutes", etc.
+        - Instead, keep the task naturally short and aligned with the user's available time.
+        
+        - Focus on consistency, momentum, and habit formation, not intensity.
+        - Start easy and become slightly more intentional over time.
+        
+        For each step, return:
+        - "shortTitle": a short UI-friendly label in 2 to 4 words
+        - "title": a clear actionable title in 4 to 8 words
+        - "description": a warm and supportive daily instruction in 4 to 6 sentences
+        
+        Description rules:
+        - Speak directly to the user
+        - Clearly say what to do today
+        - Do NOT mention any specific time duration
+        - Briefly explain why today's step matters
+        - Use positive, natural, human language
+        - Keep it practical, encouraging, and easy to understand
+        - Avoid robotic or repetitive phrasing
+        
+        Rules:
+        - Return valid JSON only
+        - Do not use markdown
+        - Do not wrap the JSON in backticks
+        
+        Use this JSON shape exactly:
+        {
+          "summary": "string",
+          "tasks": [
+            {
+              "shortTitle": "string",
+              "title": "string",
+              "description": "string"
+            }
+          ]
+        }
+        `;
 
     const result = await model.generateContent(prompt);
     const rawText = result.response.text();
 
     try {
-        const parsed = parseJsonObjectFromText(rawText) as RawGeneratedPlan;
+        const parsed = parseJsonObjectFromText(rawText) as {
+            summary?: unknown;
+            tasks?: unknown;
+        };
 
         if (
             !parsed ||
             typeof parsed.summary !== "string" ||
             !Array.isArray(parsed.tasks) ||
-            parsed.tasks.length !== 3
+            parsed.tasks.length !== 10
         ) {
             throw new Error("AI returned invalid plan structure");
         }
 
-        const normalizedTasks = parsed.tasks.map((task: unknown, index: number) => {
-            const raw = (task ?? {}) as RawGeneratedPlanTask;
+        const tasks: GeneratedPlanTask[] = parsed.tasks.map((task: unknown, index: number) => {
+            const raw = (task ?? {}) as {
+                day?: unknown;
+                shortTitle?: unknown;
+                title?: unknown;
+                description?: unknown;
+            };
+
+            const shortTitle = normalizeString(raw.shortTitle);
+            const title = normalizeString(raw.title);
+            const description = normalizeString(raw.description);
+
+            if (!shortTitle || !title || !description) {
+                throw new Error(`AI returned invalid task at index ${index}`);
+            }
 
             return {
                 day: Number(raw.day ?? index + 1),
-                shortTitle: normalizeString(raw.shortTitle),
-                title: normalizeString(raw.title),
-                description: normalizeString(raw.description),
+                shortTitle,
+                title,
+                description,
             };
         });
 
-        const finalPlan: GeneratedPlan = {
+        return {
             summary: parsed.summary.trim(),
-            tasks: normalizedTasks,
+            tasks,
         };
-
-        return finalPlan;
     } catch (error) {
         console.error("AI parse failed:", error);
         throw new Error("AI returned invalid JSON");
     }
 }
 
-/**
- * Backward-compatible alias. Prefer `generatePlan`.
- */
-export const generateLevelPlan = generatePlan;

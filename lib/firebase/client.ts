@@ -3,15 +3,14 @@ import { getFirestore } from "@firebase/firestore";
 import { getApp, getApps, initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyD_LCzYJJPDqrnzyItwexV9elIEm9h3bY0",
-    authDomain: "habit-forge-samin.firebaseapp.com",
-    projectId: "habit-forge-samin",
-    storageBucket: "habit-forge-samin.firebasestorage.app",
-    messagingSenderId: "126681327345",
-    appId: "1:126681327345:web:270590a26107857e212b50",
-    measurementId: "G-DBKRJ4REGC",
-};
-
+    apiKey: "AIzaSyAER8SFdlbMA60adXgxJNVF_htTUrBjjLQ",
+    authDomain: "pixo-mind.firebaseapp.com",
+    projectId: "pixo-mind",
+    storageBucket: "pixo-mind.firebasestorage.app",
+    messagingSenderId: "961872513964",
+    appId: "1:961872513964:web:2a1dbe1cbc36d563310809",
+    measurementId: "G-393GHGH8GZ"
+  };
 export const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);

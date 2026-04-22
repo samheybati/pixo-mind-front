@@ -15,6 +15,7 @@ import { db } from "@/lib/firebase/client";
 
 type RawPlanTask = {
     day?: unknown;
+    step?: unknown;
     shortTitle?: unknown;
     title?: unknown;
     description?: unknown;
@@ -55,7 +56,12 @@ export async function getPlansForUser(userId: string): Promise<LoadedPlan[]> {
                 const raw = (task ?? {}) as RawPlanTask;
 
                 return {
-                    day: typeof raw.day === "number" ? raw.day : index + 1,
+                    day:
+                        typeof raw.day === "number"
+                            ? raw.day
+                            : typeof raw.step === "number"
+                              ? raw.step
+                              : index + 1,
                     shortTitle: String(raw.shortTitle ?? ""),
                     title: String(raw.title ?? ""),
                     description: String(raw.description ?? ""),

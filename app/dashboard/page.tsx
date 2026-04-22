@@ -7,14 +7,13 @@ import { useEffect, useMemo, useState } from "react";
 import OverallConsistencyCard from "@/app/dashboard/components/OverallConsistencyCard";
 import SelectedPlanDetailsCard from "@/app/dashboard/components/SelectedPlanDetailsCard";
 import type { LoadedPlan } from "@/features/plans/types/plan";
-import { getPlanStats, STEP_CHUNK_SIZE, XP_PER_TASK } from "@/features/plans/utils/plan";
+import { getPlanStats, XP_PER_TASK } from "@/features/plans/utils/plan";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import {
     deletePlanForUser,
     getPlansForUser,
     updateTaskCompletion,
 } from "@/lib/services/plans.service";
-const MAX_VISIBLE_STEPS = 20;
 
 export default function DashboardPage() {
     const router = useRouter();
@@ -24,7 +23,6 @@ export default function DashboardPage() {
     const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
     const [loadingPlans, setLoadingPlans] = useState(true);
     const [savingTaskIndex, setSavingTaskIndex] = useState<number | null>(null);
-    const [visibleStepsCount, setVisibleStepsCount] = useState(STEP_CHUNK_SIZE);
 
     const isAuthenticated = !!user;
 
@@ -75,23 +73,10 @@ export default function DashboardPage() {
         return selectedPlan ? getPlanStats(selectedPlan) : null;
     }, [selectedPlan]);
 
-    useEffect(() => {
-        if (!selectedPlan) return;
-
-        setVisibleStepsCount((prev) => {
-            const minimumVisible = Math.max(STEP_CHUNK_SIZE, prev);
-            return Math.min(minimumVisible, Math.min(selectedPlan.tasks.length, MAX_VISIBLE_STEPS));
-        });
-    }, [selectedPlanId, selectedPlan]);
-
     const visibleTasks = useMemo(() => {
         if (!selectedPlan) return [];
-        return selectedPlan.tasks.slice(0, visibleStepsCount);
-    }, [selectedPlan, visibleStepsCount]);
-
-    const allTwentyStepsVisible = selectedPlan?.tasks.length
-        ? visibleStepsCount >= Math.min(selectedPlan.tasks.length, MAX_VISIBLE_STEPS)
-        : false;
+        return [...selectedPlan.tasks].sort((a, b) => a.day - b.day);
+    }, [selectedPlan]);
 
     const handleToggleTask = async (taskDay: number) => {
         if (!user || !selectedPlan) return;
@@ -146,17 +131,6 @@ export default function DashboardPage() {
         } catch (error) {
             console.error("Delete failed:", error);
         }
-    };
-
-    const handleLoadNextPlan = () => {
-        if (!selectedPlan) return;
-
-        setVisibleStepsCount((prev) =>
-            Math.min(
-                prev + STEP_CHUNK_SIZE,
-                Math.min(selectedPlan.tasks.length, MAX_VISIBLE_STEPS),
-            ),
-        );
     };
 
     if (isLoadingAuth) {
@@ -229,7 +203,6 @@ export default function DashboardPage() {
                                                 type="button"
                                                 onClick={() => {
                                                     setSelectedPlanId(plan.id);
-                                                    setVisibleStepsCount(STEP_CHUNK_SIZE);
                                                 }}
                                                 className="text-left"
                                             >
@@ -332,29 +305,6 @@ export default function DashboardPage() {
                                         </label>
                                     );
                                 })}
-                            </div>
-
-                            {visibleStepsCount > STEP_CHUNK_SIZE && !allTwentyStepsVisible ? (
-                                <div className="mt-4 rounded-2xl border border-green-500/20 bg-green-500/10 px-4 py-3 text-sm text-green-700 dark:text-green-300">
-                                    Great job. More steps have been unlocked for you.
-                                </div>
-                            ) : null}
-
-                            <div className="mt-6 flex justify-end">
-                                {!allTwentyStepsVisible ? (
-                                    <button
-                                        type="button"
-                                        onClick={handleLoadNextPlan}
-                                        className="rounded-2xl bg-[var(--primary)] px-5 py-3 text-sm font-semibold text-white transition"
-                                    >
-                                        Load next steps
-                                    </button>
-                                ) : (
-                                    <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg)] px-4 py-3 text-sm text-[var(--text-muted)]">
-                                        You finished this plan. You&apos;re ready for your next
-                                        challenge.
-                                    </div>
-                                )}
                             </div>
                         </div>
                     </div>
