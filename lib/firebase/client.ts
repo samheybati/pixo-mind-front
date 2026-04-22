@@ -9,8 +9,8 @@ const firebaseConfig = {
     storageBucket: "pixo-mind.firebasestorage.app",
     messagingSenderId: "961872513964",
     appId: "1:961872513964:web:2a1dbe1cbc36d563310809",
-    measurementId: "G-393GHGH8GZ"
-  };
+    measurementId: "G-393GHGH8GZ",
+};
 export const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);

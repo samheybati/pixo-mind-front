@@ -1,9 +1,9 @@
 import { app } from "@/lib/firebase/client";
 import { getAI, getGenerativeModel, GoogleAIBackend } from "firebase/ai";
 
-import type { GeneratedPlan, GeneratePlanParams, IntakeQuestion,GeneratedPlanTask } from "./types";
+import type { GeneratedPlan, GeneratedPlanTask, GeneratePlanParams, IntakeQuestion } from "./types";
 
-export type { GeneratedPlan, GeneratePlanParams, IntakeQuestion, } from "./types";
+export type { GeneratedPlan, GeneratePlanParams, IntakeQuestion } from "./types";
 
 const ai = getAI(app, { backend: new GoogleAIBackend() });
 
@@ -133,13 +133,11 @@ export async function generatePlan({
     const intakeBlock = intakeAnswers?.length
         ? `
 User answers:
-${intakeAnswers
-    .map((qa, idx) => `${idx + 1}. ${qa.question}\nAnswer: ${qa.answer}`)
-    .join("\n\n")}
+${intakeAnswers.map((qa, idx) => `${idx + 1}. ${qa.question}\nAnswer: ${qa.answer}`).join("\n\n")}
 `
         : "";
 
-        const prompt = `
+    const prompt = `
         You are an expert habit coach and motivational guide.
         
         Create a simple 10-day habit plan for this user.
@@ -247,4 +245,3 @@ ${intakeAnswers
         throw new Error("AI returned invalid JSON");
     }
 }
-
