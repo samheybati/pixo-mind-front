@@ -30,7 +30,6 @@ export async function savePlanForUser(userId: string, plan: CreatePlanInput) {
         description: plan.description ?? "",
         summary: plan.summary,
         timePerDay: plan.timePerDay,
-        level: plan.level,
         tasks: plan.tasks,
         createdAt: serverTimestamp(),
     });
@@ -52,7 +51,6 @@ export async function getPlansForUser(userId: string): Promise<LoadedPlan[]> {
             description: data.description ?? "",
             summary: data.summary ?? "",
             timePerDay: data.timePerDay ?? "",
-            level: data.level ?? "beginner",
             tasks: (data.tasks ?? []).map((task: unknown, index: number) => {
                 const raw = (task ?? {}) as RawPlanTask;
 

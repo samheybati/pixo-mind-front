@@ -181,7 +181,7 @@ export default function LoginPage() {
                         </h1>
 
                         <p className="mt-2 max-w-md text-sm leading-7 text-[var(--text-muted)]">
-                        Plan it. Track it. Make it stick.
+                            Plan it. Track it. Make it stick.
                         </p>
                     </div>
 
@@ -203,9 +203,7 @@ export default function LoginPage() {
                         </div>
 
                         <div className="glass-card p-5">
-                            <p className="text-[var(--text)]">
-                                Momentum that compounds
-                            </p>
+                            <p className="text-[var(--text)]">Momentum that compounds</p>
                             <p className="mt-1 text-sm text-[var(--text-muted)]">
                                 Small daily wins turn into a real lifestyle change.
                             </p>

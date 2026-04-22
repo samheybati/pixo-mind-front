@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle2, Clock3, Sparkles, Trophy } from "lucide-react";
+import { CheckCircle2, Clock3, Trophy } from "lucide-react";
 
 import type { LoadedPlan } from "@/features/plans/types/plan";
 import { formatShortDate, getPlanStats, XP_PER_TASK } from "@/features/plans/utils/plan";
@@ -47,11 +47,6 @@ export default function SelectedPlanDetailsCard({ planId, plans }: SelectedPlanD
                     <div className="inline-flex items-center gap-2 rounded-2xl border border-[var(--border)] bg-[var(--bg)] px-3 py-2 text-sm font-medium">
                         <Trophy size={15} className="text-amber-500" />
                         <span>{stats.totalXp} XP</span>
-                    </div>
-
-                    <div className="inline-flex items-center gap-2 rounded-2xl border border-[var(--border)] bg-[var(--bg)] px-3 py-2 text-sm font-medium">
-                        <Sparkles size={15} className="text-[var(--primary)]" />
-                        <span className="capitalize">{selectedPlan.level || "-"}</span>
                     </div>
 
                     <div className="inline-flex items-center gap-2 rounded-2xl border border-[var(--border)] bg-[var(--bg)] px-3 py-2 text-sm font-medium">

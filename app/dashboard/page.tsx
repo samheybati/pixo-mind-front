@@ -16,12 +16,6 @@ import {
 } from "@/lib/services/plans.service";
 const MAX_VISIBLE_STEPS = 20;
 
-function getNextLevel(level: string) {
-    if (level === "beginner") return "intermediate";
-    if (level === "intermediate") return "advanced";
-    return null;
-}
-
 export default function DashboardPage() {
     const router = useRouter();
     const { user, loading: isLoadingAuth } = useAuthUser();
@@ -98,8 +92,6 @@ export default function DashboardPage() {
     const allTwentyStepsVisible = selectedPlan?.tasks.length
         ? visibleStepsCount >= Math.min(selectedPlan.tasks.length, MAX_VISIBLE_STEPS)
         : false;
-
-    const nextLevel = selectedPlan ? getNextLevel(selectedPlan.level) : null;
 
     const handleToggleTask = async (taskDay: number) => {
         if (!user || !selectedPlan) return;
@@ -359,9 +351,8 @@ export default function DashboardPage() {
                                     </button>
                                 ) : (
                                     <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg)] px-4 py-3 text-sm text-[var(--text-muted)]">
-                                        {nextLevel
-                                            ? `You finished this level. Start your next ${nextLevel} plan.`
-                                            : "You finished this plan. You're ready for your next challenge."}
+                                        You finished this plan. You&apos;re ready for your next
+                                        challenge.
                                     </div>
                                 )}
                             </div>

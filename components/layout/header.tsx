@@ -45,7 +45,9 @@ export function Header() {
                         className="icon-toggle"
                         onClick={toggleTheme}
                         aria-label={
-                            currentTheme === "light" ? "Switch to dark mode" : "Switch to light mode"
+                            currentTheme === "light"
+                                ? "Switch to dark mode"
+                                : "Switch to light mode"
                         }
                     >
                         {currentTheme === "light" ? (
@@ -71,44 +73,44 @@ export function Header() {
                             </button>
 
                             {open && (
-                                <div className="header-menu">
-                                    <div className="header-menu-list">
+                                <div className="dropdown-menu">
+                                    <div className="dropdown-menu-list">
                                         <Link
                                             href="/dashboard"
-                                            className="header-menu-item"
+                                            className="dropdown-menu-item"
                                             onClick={() => setOpen(false)}
                                         >
-                                            <div className="header-menu-item-left">
+                                            <div className="dropdown-menu-item-left">
                                                 <span className="inline-flex h-7 w-7 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500/25 to-amber-400/25 ring-1 ring-orange-500/30">
                                                     <LayoutDashboard
                                                         size={16}
                                                         className="text-orange-600 dark:text-orange-300"
                                                     />
                                                 </span>
-                                                <span className="header-menu-item-label">
+                                                <span className="dropdown-menu-item-label">
                                                     Dashboard
                                                 </span>
                                             </div>
                                         </Link>
 
-                                        <div className="header-menu-divider" />
+                                        <div className="dropdown-menu-divider" />
 
                                         <button
                                             type="button"
-                                            className="header-menu-item header-menu-danger"
+                                            className="dropdown-menu-item dropdown-menu-danger"
                                             onClick={async () => {
                                                 setOpen(false);
                                                 await logout();
                                             }}
                                         >
-                                            <div className="header-menu-item-left">
+                                            <div className="dropdown-menu-item-left">
                                                 <span className="inline-flex h-7 w-7 items-center justify-center rounded-xl bg-gradient-to-br from-rose-500/15 to-red-500/15 ring-1 ring-red-500/20">
                                                     <LogOut
                                                         size={16}
                                                         className="text-red-600 dark:text-red-300"
                                                     />
                                                 </span>
-                                                <span className="header-menu-item-label">
+                                                <span className="dropdown-menu-item-label">
                                                     Logout
                                                 </span>
                                             </div>
