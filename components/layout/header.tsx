@@ -12,9 +12,12 @@ export function Header() {
     const { resolvedTheme, setTheme } = useTheme();
 
     const [open, setOpen] = useState(false);
+    const [mounted, setMounted] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        setMounted(true);
+
         function handleClickOutside(e: MouseEvent) {
             if (!dropdownRef.current?.contains(e.target as Node)) {
                 setOpen(false);
@@ -25,7 +28,7 @@ export function Header() {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    const currentTheme = (resolvedTheme ?? "light") as "light" | "dark";
+    const currentTheme = (resolvedTheme ?? "dark") as "light" | "dark";
 
     const toggleTheme = () => setTheme(currentTheme === "dark" ? "light" : "dark");
 
@@ -40,22 +43,26 @@ export function Header() {
                 </Link>
 
                 <div className="relative flex items-center gap-3" ref={dropdownRef}>
-                    <button
-                        type="button"
-                        className="icon-toggle"
-                        onClick={toggleTheme}
-                        aria-label={
-                            currentTheme === "light"
-                                ? "Switch to dark mode"
-                                : "Switch to light mode"
-                        }
-                    >
-                        {currentTheme === "light" ? (
-                            <Moon size={18} className="text-indigo-600" />
-                        ) : (
-                            <Sun size={18} className="text-amber-500" />
-                        )}
-                    </button>
+                    {mounted ? (
+                        <button
+                            type="button"
+                            className="icon-toggle"
+                            onClick={toggleTheme}
+                            aria-label={
+                                currentTheme === "light"
+                                    ? "Switch to dark mode"
+                                    : "Switch to light mode"
+                            }
+                        >
+                            {currentTheme === "light" ? (
+                                <Moon size={18} className="text-indigo-600" />
+                            ) : (
+                                <Sun size={18} className="text-amber-500" />
+                            )}
+                        </button>
+                    ) : (
+                        <span className="icon-toggle" aria-hidden="true" />
+                    )}
 
                     {user ? (
                         <>
