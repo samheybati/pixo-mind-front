@@ -11,18 +11,6 @@ const model = getGenerativeModel(ai, {
     model: "gemini-2.5-flash-lite",
 });
 
-type RawGeneratedPlan = {
-    summary?: unknown;
-    tasks?: unknown;
-};
-
-type RawGeneratedPlanTask = {
-    day?: unknown;
-    shortTitle?: unknown;
-    title?: unknown;
-    description?: unknown;
-};
-
 function parseJsonObjectFromText(text: string): unknown {
     const cleaned = text.trim();
 

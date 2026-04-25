@@ -125,8 +125,8 @@ export default function HomePage() {
                                                                 {row.goal}
                                                             </p>
                                                             <p className="mt-1 text-xs text-[var(--text-muted)]">
-                                                                {row.completedCount}/{row.totalCount}{" "}
-                                                                completed
+                                                                {row.completedCount}/
+                                                                {row.totalCount} completed
                                                             </p>
                                                         </div>
                                                         <div className="shrink-0 rounded-2xl bg-[var(--card)] px-3 py-1.5 text-xs font-semibold text-[var(--text)]">

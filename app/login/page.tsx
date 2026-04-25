@@ -82,7 +82,7 @@ function Spinner() {
 
 export default function LoginPage() {
     const router = useRouter();
-    const { user } = useAuthUser();
+    useAuthUser();
 
     const [status, setStatus] = useState<LoginStatus>("checking");
     const [error, setError] = useState("");

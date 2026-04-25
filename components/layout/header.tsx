@@ -12,12 +12,9 @@ export function Header() {
     const { resolvedTheme, setTheme } = useTheme();
 
     const [open, setOpen] = useState(false);
-    const [mounted, setMounted] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        setMounted(true);
-
         function handleClickOutside(e: MouseEvent) {
             if (!dropdownRef.current?.contains(e.target as Node)) {
                 setOpen(false);
@@ -29,6 +26,7 @@ export function Header() {
     }, []);
 
     const currentTheme = (resolvedTheme ?? "dark") as "light" | "dark";
+    const isThemeReady = resolvedTheme != null;
 
     const toggleTheme = () => setTheme(currentTheme === "dark" ? "light" : "dark");
 
@@ -43,7 +41,7 @@ export function Header() {
                 </Link>
 
                 <div className="relative flex items-center gap-3" ref={dropdownRef}>
-                    {mounted ? (
+                    {isThemeReady ? (
                         <button
                             type="button"
                             className="icon-toggle"
@@ -72,6 +70,7 @@ export function Header() {
                                 onClick={() => setOpen((prev) => !prev)}
                                 aria-label="Open user menu"
                             >
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
                                     src={user.photoURL || "/avatar.png"}
                                     alt="user"

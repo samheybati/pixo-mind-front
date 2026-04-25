@@ -7,9 +7,9 @@ Turn goals into lasting habits. Create a habit plan (AI-generated or custom), tr
 - **Next.js (App Router)** + **React** + **TypeScript**
 - **Tailwind CSS v4** (plus custom global tokens/styles in `app/globals.css`)
 - **Firebase**
-  - **Auth** (Google sign-in)
-  - **Firestore** (user profile + habit plans)
-  - **Firebase AI (Gemini)** for generating intake questions + plans
+    - **Auth** (Google sign-in)
+    - **Firestore** (user profile + habit plans)
+    - **Firebase AI (Gemini)** for generating intake questions + plans
 - **next-themes** (dark/light theme)
 - **lucide-react** (icons)
 
@@ -24,7 +24,7 @@ Turn goals into lasting habits. Create a habit plan (AI-generated or custom), tr
 
 - `users/{uid}`: user profile (xp, streak, etc.)
 - `users/{uid}/plans/{planId}`: saved plans
-  - fields: `goal`, `description`, `summary`, `timePerDay`, `tasks[]`, `createdAt`
+    - fields: `goal`, `description`, `summary`, `timePerDay`, `tasks[]`, `createdAt`
 
 ## Getting started (local)
 
@@ -54,11 +54,11 @@ This app expects a Firebase project with:
 
 - Firebase client initialization: `lib/firebase/client.ts`
 - Auth + Firestore access:
-  - `lib/services/auth.service.ts`
-  - `lib/services/users.service.ts`
-  - `lib/services/plans.service.ts`
+    - `lib/services/auth.service.ts`
+    - `lib/services/users.service.ts`
+    - `lib/services/plans.service.ts`
 - AI prompts + parsing:
-  - `lib/ai/client.ts`
+    - `lib/ai/client.ts`
 
 ### Security notes
 

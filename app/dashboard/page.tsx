@@ -4,10 +4,9 @@ import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
-import OverallConsistencyCard from "@/app/dashboard/components/OverallConsistencyCard";
 import SelectedPlanDetailsCard from "@/app/dashboard/components/SelectedPlanDetailsCard";
 import type { LoadedPlan } from "@/features/plans/types/plan";
-import { getPlanStats, XP_PER_TASK } from "@/features/plans/utils/plan";
+import { getPlanStats } from "@/features/plans/utils/plan";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import {
     deletePlanForUser,
@@ -225,145 +224,146 @@ export default function DashboardPage() {
                 <section className="px-6 py-10 sm:px-10 md:col-span-2">
                     <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
                         <section>
-                        <div className="rounded-[28px] border border-[var(--border)] bg-[var(--card)] p-6 shadow-xl">
-                        <div className="border-b border-[var(--border)] pb-4">
-                            <div className="mb-3 flex items-center justify-between gap-4">
-                                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--primary)]">
-                                    Your Goals
-                                </p>
+                            <div className="rounded-[28px] border border-[var(--border)] bg-[var(--card)] p-6 shadow-xl">
+                                <div className="border-b border-[var(--border)] pb-4">
+                                    <div className="mb-3 flex items-center justify-between gap-4">
+                                        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--primary)]">
+                                            Your Goals
+                                        </p>
 
-                                <button
-                                    type="button"
-                                    onClick={() => router.push("/define-a-plan")}
-                                    className="rounded-2xl bg-[var(--primary)] px-4 py-2  font-semibold text-white transition hover:opacity-90"
-                                >
-                                   Add a new plan
-                                </button>
-                            </div>
-
-                            <div className="flex flex-wrap gap-3">
-                                {plans.map((plan) => {
-                                    const active = plan.id === selectedPlanId;
-                                    const stats = getPlanStats(plan);
-
-                                    return (
-                                        <div
-                                            key={plan.id}
-                                            className={`flex items-center gap-2 rounded-2xl border px-4 py-3 transition ${
-                                                active
-                                                    ? "border-[var(--primary)] bg-[var(--bg)]"
-                                                    : "border-[var(--border)] bg-transparent"
-                                            }`}
+                                        <button
+                                            type="button"
+                                            onClick={() => router.push("/define-a-plan")}
+                                            className="rounded-2xl bg-[var(--primary)] px-4 py-2  font-semibold text-white transition hover:opacity-90"
                                         >
-                                            <button
-                                                type="button"
-                                                onClick={() => {
-                                                    setSelectedPlanId(plan.id);
-                                                }}
-                                                className="text-left"
-                                            >
-                                                <p className="text-sm font-semibold capitalize">
-                                                    {plan.goal}
-                                                </p>
-                                                <p className="mt-1 text-xs text-[var(--text-muted)]">
-                                                    {stats.completedCount}/{stats.totalCount}{" "}
-                                                    completed
-                                                </p>
-                                            </button>
+                                            Add a new plan
+                                        </button>
+                                    </div>
 
-                                            <button
-                                                type="button"
-                                                onClick={() => handleDeletePlan(plan.id)}
-                                                className="rounded-lg p-1 text-[var(--text-muted)] transition hover:bg-[var(--card)] hover:text-red-500"
-                                                aria-label={`Delete ${plan.goal}`}
-                                            >
-                                                <Trash2 size={16} />
-                                            </button>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
+                                    <div className="flex flex-wrap gap-3">
+                                        {plans.map((plan) => {
+                                            const active = plan.id === selectedPlanId;
+                                            const stats = getPlanStats(plan);
 
-                        <div className="pt-6">
-                            <div className="max-w-3xl">
-                                <p className="mt-5 leading-8 text-[var(--text-muted)]">
-                                    {selectedPlan.summary}
-                                </p>
-                            </div>
-                        </div>
+                                            return (
+                                                <div
+                                                    key={plan.id}
+                                                    className={`flex items-center gap-2 rounded-2xl border px-4 py-3 transition ${
+                                                        active
+                                                            ? "border-[var(--primary)] bg-[var(--bg)]"
+                                                            : "border-[var(--border)] bg-transparent"
+                                                    }`}
+                                                >
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => {
+                                                            setSelectedPlanId(plan.id);
+                                                        }}
+                                                        className="text-left"
+                                                    >
+                                                        <p className="text-sm font-semibold capitalize">
+                                                            {plan.goal}
+                                                        </p>
+                                                        <p className="mt-1 text-xs text-[var(--text-muted)]">
+                                                            {stats.completedCount}/
+                                                            {stats.totalCount} completed
+                                                        </p>
+                                                    </button>
 
-                        <div className="mt-8 border-t border-[var(--border)] pt-6">
-                            <div className="flex items-center justify-between gap-4">
-                                <h2 className="text-3xl font-bold">Checklist</h2>
-
-                                <div className="rounded-2xl bg-[var(--bg)] px-4 py-2 text-sm text-[var(--text-muted)]">
-                                    {selectedPlanStats.completedCount} of{" "}
-                                    {selectedPlanStats.totalCount} done
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleDeletePlan(plan.id)}
+                                                        className="rounded-lg p-1 text-[var(--text-muted)] transition hover:bg-[var(--card)] hover:text-red-500"
+                                                        aria-label={`Delete ${plan.goal}`}
+                                                    >
+                                                        <Trash2 size={16} />
+                                                    </button>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className="mt-6 space-y-4">
-                                {visibleTasks.map((task) => {
-                                    const actualIndex = selectedPlan.tasks.findIndex(
-                                        (item) => item.day === task.day,
-                                    );
+                                <div className="pt-6">
+                                    <div className="max-w-3xl">
+                                        <p className="mt-5 leading-8 text-[var(--text-muted)]">
+                                            {selectedPlan.summary}
+                                        </p>
+                                    </div>
+                                </div>
 
-                                    return (
-                                        <label
-                                            key={`${selectedPlan.id}-${task.day}`}
-                                            className="flex items-start gap-4 rounded-2xl border border-[var(--border)] bg-[var(--bg)] p-5"
-                                        >
-                                            <input
-                                                type="checkbox"
-                                                checked={task.completed}
-                                                onChange={() => handleToggleTask(task.day)}
-                                                className="mt-1 h-5 w-5 accent-[var(--primary)]"
-                                            />
+                                <div className="mt-8 border-t border-[var(--border)] pt-6">
+                                    <div className="flex items-center justify-between gap-4">
+                                        <h2 className="text-3xl font-bold">Checklist</h2>
 
-                                            <div className="flex-1">
-                                                <div className="flex items-start justify-between gap-4">
-                                                    <div>
-                                                        <p className="font-semibold">
-                                                            {task.shortTitle || `Day ${task.day}`}
-                                                        </p>
+                                        <div className="rounded-2xl bg-[var(--bg)] px-4 py-2 text-sm text-[var(--text-muted)]">
+                                            {selectedPlanStats.completedCount} of{" "}
+                                            {selectedPlanStats.totalCount} done
+                                        </div>
+                                    </div>
 
-                                                        <p
-                                                            className={`mt-2 ${
-                                                                task.completed
-                                                                    ? "line-through opacity-60"
-                                                                    : ""
-                                                            }`}
-                                                        >
-                                                            {task.title}
-                                                        </p>
+                                    <div className="mt-6 space-y-4">
+                                        {visibleTasks.map((task) => {
+                                            const actualIndex = selectedPlan.tasks.findIndex(
+                                                (item) => item.day === task.day,
+                                            );
 
-                                                        {task.description ? (
-                                                            <p className="mt-2 text-sm leading-6 text-[var(--text-muted)]">
-                                                                {task.description}
-                                                            </p>
-                                                        ) : null}
-                                                    </div>
+                                            return (
+                                                <label
+                                                    key={`${selectedPlan.id}-${task.day}`}
+                                                    className="flex items-start gap-4 rounded-2xl border border-[var(--border)] bg-[var(--bg)] p-5"
+                                                >
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={task.completed}
+                                                        onChange={() => handleToggleTask(task.day)}
+                                                        className="mt-1 h-5 w-5 accent-[var(--primary)]"
+                                                    />
 
-                                                    <div className="text-right">
-                                                        {/* <p className="text-sm font-semibold text-[var(--primary)]">
+                                                    <div className="flex-1">
+                                                        <div className="flex items-start justify-between gap-4">
+                                                            <div>
+                                                                <p className="font-semibold">
+                                                                    {task.shortTitle ||
+                                                                        `Day ${task.day}`}
+                                                                </p>
+
+                                                                <p
+                                                                    className={`mt-2 ${
+                                                                        task.completed
+                                                                            ? "line-through opacity-60"
+                                                                            : ""
+                                                                    }`}
+                                                                >
+                                                                    {task.title}
+                                                                </p>
+
+                                                                {task.description ? (
+                                                                    <p className="mt-2 text-sm leading-6 text-[var(--text-muted)]">
+                                                                        {task.description}
+                                                                    </p>
+                                                                ) : null}
+                                                            </div>
+
+                                                            <div className="text-right">
+                                                                {/* <p className="text-sm font-semibold text-[var(--primary)]">
                                                             +{XP_PER_TASK} XP
                                                         </p> */}
 
-                                                        {savingTaskIndex === actualIndex ? (
-                                                            <p className="mt-1 text-xs text-[var(--text-muted)]">
-                                                                Saving...
-                                                            </p>
-                                                        ) : null}
+                                                                {savingTaskIndex === actualIndex ? (
+                                                                    <p className="mt-1 text-xs text-[var(--text-muted)]">
+                                                                        Saving...
+                                                                    </p>
+                                                                ) : null}
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </label>
-                                    );
-                                })}
+                                                </label>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
                         </section>
 
                         <aside className="space-y-6">

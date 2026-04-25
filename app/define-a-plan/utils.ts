@@ -1,7 +1,7 @@
 import type { CustomStep } from "./models";
 
 export function createEmptyCustomSteps(): CustomStep[] {
-    return Array.from({ length: 7 }, () => ({
+    return Array.from({ length: 3 }, () => ({
         shortTitle: "",
         title: "",
         description: "",

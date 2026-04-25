@@ -1,55 +1,51 @@
 {
     "version": "2.0.0",
     "tasks": [
-      {
-        "type": "npm",
-        "script": "dev",
-        "problemMatcher": [],
-        "label": "npm: dev",
-        "detail": "next dev"
-      },
-      {
-        "type": "npm",
-        "script": "lint",
-        "problemMatcher": [],
-        "label": "npm: lint",
-        "detail": "eslint"
-      },
-      {
-        "label": "npm: format",
-        "type": "shell",
-        "command": "npm run lint && npm run format",
-        "group": "build",
-        "problemMatcher": [],
-        "detail": "Run lint first, then prettier"
-      },
-      {
-        "type": "npm",
-        "script": "build",
-        "group": "build",
-        "problemMatcher": [],
-        "label": "npm: build",
-        "detail": "next build"
-      },
-      {
-        "type": "shell",
-        "command": "firebase deploy --only hosting --project pixo-mind",
-        "group": "build",
-        "problemMatcher": [],
-        "label": "firebase: deploy",
-        "detail": "Deploy Firebase Hosting"
-      },
-      {
-        "label": "app: build + deploy",
-        "dependsOn": [
-          "npm: lint",
-          "npm: build",
-          "firebase: deploy"
-        ],
-        "dependsOrder": "sequence",
-        "group": "build",
-        "problemMatcher": [],
-        "detail": "Lint, build, and deploy hosting"
-      }
+        {
+            "type": "npm",
+            "script": "dev",
+            "problemMatcher": [],
+            "label": "npm: dev",
+            "detail": "next dev"
+        },
+        {
+            "type": "npm",
+            "script": "lint",
+            "problemMatcher": [],
+            "label": "npm: lint",
+            "detail": "eslint"
+        },
+        {
+            "label": "npm: format",
+            "type": "shell",
+            "command": "npm run lint && npm run format",
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Run lint first, then prettier"
+        },
+        {
+            "type": "npm",
+            "script": "build",
+            "group": "build",
+            "problemMatcher": [],
+            "label": "npm: build",
+            "detail": "next build"
+        },
+        {
+            "type": "shell",
+            "command": "firebase deploy --only hosting --project pixo-mind",
+            "group": "build",
+            "problemMatcher": [],
+            "label": "firebase: deploy",
+            "detail": "Deploy Firebase Hosting"
+        },
+        {
+            "label": "app: build + deploy",
+            "dependsOn": ["npm: lint", "npm: build", "firebase: deploy"],
+            "dependsOrder": "sequence",
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Lint, build, and deploy hosting"
+        }
     ]
-  }
+}
