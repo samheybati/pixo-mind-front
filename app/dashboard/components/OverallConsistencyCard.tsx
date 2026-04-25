@@ -56,7 +56,7 @@ export default function OverallConsistencyCard({ plans }: OverallConsistencyCard
                     <div>
                         <p className="text-sm text-[var(--text-muted)]">Consistency</p>
                         <h2 className="mt-1 text-2xl font-bold">
-                            {completedTasks.length} / {allTasks.length} days
+                            {completedTasks.length} / {allTasks.length} steps
                         </h2>
                     </div>
 

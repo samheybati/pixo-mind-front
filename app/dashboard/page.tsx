@@ -135,41 +135,97 @@ export default function DashboardPage() {
 
     if (isLoadingAuth) {
         return (
-            <main className="px-6 py-10">
-                <div className="mx-auto max-w-7xl">Checking session...</div>
+            <main className="glass-page">
+                <div className="ambient-blobs" aria-hidden="true">
+                    <div className="ambient-blob ambient-blob--top" />
+                    <div className="ambient-blob ambient-blob--bottom-left" />
+                    <div className="ambient-blob ambient-blob--right" />
+                </div>
+
+                <div className="glass-shell">
+                    <section className="px-6 py-10 sm:px-10 md:col-span-2">
+                        <div className="mx-auto max-w-6xl text-sm text-[var(--text-muted)]">
+                            Checking session...
+                        </div>
+                    </section>
+                </div>
             </main>
         );
     }
 
     if (!isAuthenticated) {
         return (
-            <main className="px-6 py-10">
-                <div className="mx-auto max-w-7xl">Redirecting to login...</div>
+            <main className="glass-page">
+                <div className="ambient-blobs" aria-hidden="true">
+                    <div className="ambient-blob ambient-blob--top" />
+                    <div className="ambient-blob ambient-blob--bottom-left" />
+                    <div className="ambient-blob ambient-blob--right" />
+                </div>
+
+                <div className="glass-shell">
+                    <section className="px-6 py-10 sm:px-10 md:col-span-2">
+                        <div className="mx-auto max-w-6xl text-sm text-[var(--text-muted)]">
+                            Redirecting to login...
+                        </div>
+                    </section>
+                </div>
             </main>
         );
     }
 
     if (loadingPlans) {
         return (
-            <main className="px-6 py-10">
-                <div className="mx-auto max-w-7xl">Loading dashboard...</div>
+            <main className="glass-page">
+                <div className="ambient-blobs" aria-hidden="true">
+                    <div className="ambient-blob ambient-blob--top" />
+                    <div className="ambient-blob ambient-blob--bottom-left" />
+                    <div className="ambient-blob ambient-blob--right" />
+                </div>
+
+                <div className="glass-shell">
+                    <section className="px-6 py-10 sm:px-10 md:col-span-2">
+                        <div className="mx-auto max-w-6xl text-sm text-[var(--text-muted)]">
+                            Loading dashboard...
+                        </div>
+                    </section>
+                </div>
             </main>
         );
     }
 
     if (!selectedPlan || !selectedPlanStats) {
         return (
-            <main className="px-6 py-10">
-                <div className="mx-auto max-w-7xl">No plan selected.</div>
+            <main className="glass-page">
+                <div className="ambient-blobs" aria-hidden="true">
+                    <div className="ambient-blob ambient-blob--top" />
+                    <div className="ambient-blob ambient-blob--bottom-left" />
+                    <div className="ambient-blob ambient-blob--right" />
+                </div>
+
+                <div className="glass-shell">
+                    <section className="px-6 py-10 sm:px-10 md:col-span-2">
+                        <div className="mx-auto max-w-6xl text-sm text-[var(--text-muted)]">
+                            No plan selected.
+                        </div>
+                    </section>
+                </div>
             </main>
         );
     }
 
     return (
-        <main className="px-6 py-10">
-            <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
-                <section>
-                    <div className="rounded-[28px] border border-[var(--border)] bg-[var(--card)] p-6 shadow-xl">
+        <main className="glass-page">
+            <div className="ambient-blobs" aria-hidden="true">
+                <div className="ambient-blob ambient-blob--top" />
+                <div className="ambient-blob ambient-blob--bottom-left" />
+                <div className="ambient-blob ambient-blob--right" />
+            </div>
+
+            <div className="glass-shell">
+                <section className="px-6 py-10 sm:px-10 md:col-span-2">
+                    <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
+                        <section>
+                        <div className="rounded-[28px] border border-[var(--border)] bg-[var(--card)] p-6 shadow-xl">
                         <div className="border-b border-[var(--border)] pb-4">
                             <div className="mb-3 flex items-center justify-between gap-4">
                                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--primary)]">
@@ -179,9 +235,9 @@ export default function DashboardPage() {
                                 <button
                                     type="button"
                                     onClick={() => router.push("/define-a-plan")}
-                                    className="rounded-2xl bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
+                                    className="rounded-2xl bg-[var(--primary)] px-4 py-2  font-semibold text-white transition hover:opacity-90"
                                 >
-                                    New plan
+                                   Add a new plan
                                 </button>
                             </div>
 
@@ -290,9 +346,9 @@ export default function DashboardPage() {
                                                     </div>
 
                                                     <div className="text-right">
-                                                        <p className="text-sm font-semibold text-[var(--primary)]">
+                                                        {/* <p className="text-sm font-semibold text-[var(--primary)]">
                                                             +{XP_PER_TASK} XP
-                                                        </p>
+                                                        </p> */}
 
                                                         {savingTaskIndex === actualIndex ? (
                                                             <p className="mt-1 text-xs text-[var(--text-muted)]">
@@ -308,12 +364,14 @@ export default function DashboardPage() {
                             </div>
                         </div>
                     </div>
-                </section>
+                        </section>
 
-                <aside className="space-y-6">
-                    <OverallConsistencyCard plans={plans} />
-                    <SelectedPlanDetailsCard planId={selectedPlanId} plans={plans} />
-                </aside>
+                        <aside className="space-y-6">
+                            {/* <OverallConsistencyCard plans={plans} /> */}
+                            <SelectedPlanDetailsCard planId={selectedPlanId} plans={plans} />
+                        </aside>
+                    </div>
+                </section>
             </div>
         </main>
     );

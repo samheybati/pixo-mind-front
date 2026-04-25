@@ -51,9 +51,19 @@ export default function DefineAPlanPage() {
 
     if (user === undefined) {
         return (
-            <main className="flex min-h-full items-center justify-center px-6 py-10">
-                <div className="w-full max-w-xl rounded-[28px] border border-[var(--border)] bg-[var(--card)] p-8 text-center shadow-xl">
-                    Checking your session...
+            <main className="glass-page">
+                <div className="ambient-blobs" aria-hidden="true">
+                    <div className="ambient-blob ambient-blob--top" />
+                    <div className="ambient-blob ambient-blob--bottom-left" />
+                    <div className="ambient-blob ambient-blob--right" />
+                </div>
+
+                <div className="glass-shell">
+                    <section className="px-6 py-10 sm:px-10 md:col-span-2">
+                        <div className="mx-auto max-w-6xl text-sm text-[var(--text-muted)]">
+                            Checking your session...
+                        </div>
+                    </section>
                 </div>
             </main>
         );
@@ -61,9 +71,19 @@ export default function DefineAPlanPage() {
 
     if (user === null) {
         return (
-            <main className="flex min-h-full items-center justify-center px-6 py-10">
-                <div className="w-full max-w-xl rounded-[28px] border border-[var(--border)] bg-[var(--card)] p-8 text-center shadow-xl">
-                    Redirecting to login...
+            <main className="glass-page">
+                <div className="ambient-blobs" aria-hidden="true">
+                    <div className="ambient-blob ambient-blob--top" />
+                    <div className="ambient-blob ambient-blob--bottom-left" />
+                    <div className="ambient-blob ambient-blob--right" />
+                </div>
+
+                <div className="glass-shell">
+                    <section className="px-6 py-10 sm:px-10 md:col-span-2">
+                        <div className="mx-auto max-w-6xl text-sm text-[var(--text-muted)]">
+                            Redirecting to login...
+                        </div>
+                    </section>
                 </div>
             </main>
         );
@@ -77,51 +97,55 @@ export default function DefineAPlanPage() {
                 <div className="ambient-blob ambient-blob--right" />
             </div>
 
-            <div className="w-full max-w-3xl rounded-[32px] border border-[var(--border)] bg-[var(--card)] p-8 shadow-[0_20px_80px_rgba(0,0,0,0.08)] sm:p-10">
-                <div className="mb-8">
-                    <h1 className="mt-5 text-3xl font-bold sm:text-4xl font-comfortaa text-center">
-                        Build a habit you can keep
-                    </h1>
+            <div className="glass-shell">
+                <section className="px-6 py-10 sm:px-10 md:col-span-2">
+                    <div className="mx-auto grid w-full max-w-6xl gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+                        <div className="w-full rounded-[28px] border border-[var(--border)] bg-[var(--card)] p-6 shadow-xl sm:p-8">
+                            <div className="mb-8">
+                                <h1 className="mt-5 text-3xl font-bold sm:text-4xl font-comfortaa text-center">
+                                    Build a habit you can keep
+                                </h1>
 
-                    <p className="mt-3 max-w-2xl leading-8 text-[var(--text-muted)]">
-                        Name the habit you want to lock in, describe what “success” looks like, and
-                        Pixo Mind will turn it into clear steps you can follow — with AI or your own
-                        rules.
-                    </p>
-                </div>
-
-                <form onSubmit={submit} className="space-y-6">
-                    <div className="grid gap-6">
-                        <div>
-                            <p className="mb-2 block text-sm font-medium">Plan type</p>
-                            <div className="grid gap-3 sm:grid-cols-2">
-                                <label className="flex cursor-pointer items-center justify-between gap-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] px-4 py-3">
-                                    <span className="text-sm flex items-center font-semibold text-[var(--text)]">
-                                        <Sparkles size={14} className="mr-2" /> AI generate
-                                    </span>
-                                    <input
-                                        type="radio"
-                                        name="plan-mode"
-                                        value="ai"
-                                        checked={mode === "ai"}
-                                        onChange={() => setMode("ai")}
-                                    />
-                                </label>
-
-                                <label className="flex cursor-pointer items-center justify-between gap-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] px-4 py-3">
-                                    <span className="text-sm font-semibold text-[var(--text)]">
-                                        Custom (step-by-step)
-                                    </span>
-                                    <input
-                                        type="radio"
-                                        name="plan-mode"
-                                        value="custom"
-                                        checked={mode === "custom"}
-                                        onChange={() => setMode("custom")}
-                                    />
-                                </label>
+                                <p className="mt-3 max-w-2xl leading-8 text-[var(--text-muted)]">
+                                    Name the habit you want to lock in, describe what “success”
+                                    looks like, and Pixo Mind will turn it into clear steps you can
+                                    follow — with AI or your own rules.
+                                </p>
                             </div>
-                        </div>
+
+                            <form onSubmit={submit} className="space-y-6">
+                                <div className="grid gap-6">
+                                    <div>
+                                        <p className="mb-2 block text-sm font-medium">Plan type</p>
+                                        <div className="grid gap-3 sm:grid-cols-2">
+                                            <label className="flex cursor-pointer items-center justify-between gap-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] px-4 py-3">
+                                                <span className="text-sm flex items-center font-semibold text-[var(--text)]">
+                                                    <Sparkles size={14} className="mr-2" /> AI
+                                                    generate
+                                                </span>
+                                                <input
+                                                    type="radio"
+                                                    name="plan-mode"
+                                                    value="ai"
+                                                    checked={mode === "ai"}
+                                                    onChange={() => setMode("ai")}
+                                                />
+                                            </label>
+
+                                            <label className="flex cursor-pointer items-center justify-between gap-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] px-4 py-3">
+                                                <span className="text-sm font-semibold text-[var(--text)]">
+                                                    Custom (step-by-step)
+                                                </span>
+                                                <input
+                                                    type="radio"
+                                                    name="plan-mode"
+                                                    value="custom"
+                                                    checked={mode === "custom"}
+                                                    onChange={() => setMode("custom")}
+                                                />
+                                            </label>
+                                        </div>
+                                    </div>
 
                         <div>
                             <label htmlFor="plan-title" className="mb-2 block text-sm font-medium">
@@ -216,6 +240,44 @@ export default function DefineAPlanPage() {
                             </div>
                         </div>
 
+                        {mode === "custom" ? (
+                            <div>
+                                <label
+                                    htmlFor="custom-steps-count"
+                                    className="mb-2 block text-sm font-medium"
+                                >
+                                    Steps (0 to 10)
+                                </label>
+                                <input
+                                    id="custom-steps-count"
+                                    type="number"
+                                    min={0}
+                                    max={10}
+                                    inputMode="numeric"
+                                    value={customSteps.length}
+                                    onChange={(e) => {
+                                        const raw = Number.parseInt(e.target.value || "0", 10);
+                                        const nextLen = Number.isFinite(raw)
+                                            ? Math.min(10, Math.max(0, raw))
+                                            : 0;
+
+                                        setCustomSteps((prev) => {
+                                            const next = prev.slice(0, nextLen);
+                                            while (next.length < nextLen) {
+                                                next.push({
+                                                    shortTitle: "",
+                                                    title: "",
+                                                    description: "",
+                                                });
+                                            }
+                                            return next;
+                                        });
+                                    }}
+                                    className="w-full rounded-2xl border border-[var(--border)] bg-[var(--bg)] px-4 py-3 outline-none placeholder:text-gray-400 focus:border-[var(--primary)]"
+                                />
+                            </div>
+                        ) : null}
+
                         {mode === "ai" && intakeQuestions ? (
                             <div className="grid gap-4">
                                 {intakeQuestions.map((q) => (
@@ -252,19 +314,6 @@ export default function DefineAPlanPage() {
                             <div className="grid gap-4">
                                 <div className="flex items-center justify-between gap-3">
                                     <p className="text-sm font-medium">Your steps</p>
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            setCustomSteps((prev) => [
-                                                ...prev,
-                                                { shortTitle: "", title: "", description: "" },
-                                            ])
-                                        }
-                                        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--bg)] text-base font-semibold leading-none text-[var(--text)] transition hover:opacity-90"
-                                        aria-label="Add another step"
-                                    >
-                                        +
-                                    </button>
                                 </div>
 
                                 {customSteps.map((step, index) => (
@@ -366,8 +415,70 @@ export default function DefineAPlanPage() {
                                       : "Generate plan"}
                             </span>
                         )}
-                    </button>
-                </form>
+                                </button>
+                            </form>
+                        </div>
+
+                        <aside className="space-y-6">
+                            <div className="rounded-[28px] border border-[var(--border)] bg-[var(--card)] p-6 shadow-xl">
+                                <div className="space-y-3 text-sm leading-7 text-[var(--text-muted)]">
+                                    <p className="text-xs uppercase tracking-[0.16em] text-[var(--text-muted)]">
+                                        How it works
+                                    </p>
+                                    <p className="text-lg font-bold text-[var(--text)]">
+                                        Create your plan
+                                    </p>
+
+                                    <p>
+                                        -{" "}
+                                        <span className="font-semibold text-[var(--text)]">
+                                            AI
+                                        </span>
+                                        : Answer a few questions and we’ll generate a{" "}
+                                        <span className="font-semibold text-[var(--text)]">
+                                            10-step
+                                        </span>{" "}
+                                        plan for you.
+                                    </p>
+                                    <p className="pl-4 text-[13px] leading-6 text-[var(--text-muted)]">
+                                        You’ll get a clear checklist you can follow day by day.
+                                        Each step is designed to be realistic based on your time
+                                        per day and your goal description.
+                                    </p>
+                                    <p>
+                                        -{" "}
+                                        <span className="font-semibold text-[var(--text)]">
+                                            Custom
+                                        </span>
+                                        : Choose the number of steps and write each step yourself.
+                                    </p>
+                                    <p className="pl-4 text-[13px] leading-6 text-[var(--text-muted)]">
+                                        Use the{" "}
+                                        <span className="font-semibold text-[var(--text)]">
+                                            Steps
+                                        </span>{" "}
+                                        field (0–10) to control how many steps you want. Then fill
+                                        in a short label, a title, and (optionally) a description
+                                        for each one.
+                                    </p>
+                                    <p>
+                                        -{" "}
+                                        <span className="font-semibold text-[var(--text)]">
+                                            Multiple plans
+                                        </span>
+                                        : You can keep several plans at the same time and switch
+                                        between them anytime.
+                                    </p>
+                                    <p className="pl-4 text-[13px] leading-6 text-[var(--text-muted)]">
+                                        Start a new plan without losing your current one. Your
+                                        progress stays separate, so you can track different habits
+                                        in parallel.
+                                    </p>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
             </div>
         </main>
     );

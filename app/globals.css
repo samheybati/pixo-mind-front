@@ -193,11 +193,11 @@ button:disabled {
 }
 
 .glass-card:hover {
-    transform: translateY(-2px);
-    box-shadow:
+    /* transform: translateY(-2px); */
+    /* box-shadow:
         0 26px 60px rgba(0, 0, 0, 0.2),
         0 1px 0 rgba(255, 255, 255, 0.12) inset;
-    border-color: color-mix(in srgb, var(--primary) 18%, var(--border));
+    border-color: color-mix(in srgb, var(--primary) 18%, var(--border)); */
 }
 
 .btn-glass {
