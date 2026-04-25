@@ -1,11 +1,11 @@
 import type { CustomStep } from "./models";
 
 export function createEmptyCustomSteps(): CustomStep[] {
-    return [
-        { shortTitle: "", title: "", description: "" },
-        { shortTitle: "", title: "", description: "" },
-        { shortTitle: "", title: "", description: "" },
-    ];
+    return Array.from({ length: 7 }, () => ({
+        shortTitle: "",
+        title: "",
+        description: "",
+    }));
 }
 
 export function isCustomStepsValid(steps: CustomStep[]) {

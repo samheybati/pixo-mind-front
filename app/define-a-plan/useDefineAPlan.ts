@@ -107,7 +107,7 @@ export function useDefineAPlan() {
                       })
                     : {
                           summary:
-                              "This is your custom 3-step plan. Keep it simple and consistent, and focus on doing the steps even on busy days. If a step feels too hard, shrink it and keep the streak alive. Small wins compound faster than big bursts.",
+                              "This is your custom plan. Keep it simple and consistent, and focus on doing the steps even on busy days. If a step feels too hard, shrink it and keep the streak alive. Small wins compound faster than big bursts.",
                           tasks: customSteps.map((step, index) => ({
                               day: index + 1,
                               shortTitle: step.shortTitle.trim(),

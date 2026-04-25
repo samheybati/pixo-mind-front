@@ -250,7 +250,22 @@ export default function DefineAPlanPage() {
 
                         {mode === "custom" ? (
                             <div className="grid gap-4">
-                                <p className="text-sm font-medium">Your 3 steps</p>
+                                <div className="flex items-center justify-between gap-3">
+                                    <p className="text-sm font-medium">Your steps</p>
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            setCustomSteps((prev) => [
+                                                ...prev,
+                                                { shortTitle: "", title: "", description: "" },
+                                            ])
+                                        }
+                                        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--bg)] text-base font-semibold leading-none text-[var(--text)] transition hover:opacity-90"
+                                        aria-label="Add another step"
+                                    >
+                                        +
+                                    </button>
+                                </div>
 
                                 {customSteps.map((step, index) => (
                                     <div
@@ -344,7 +359,11 @@ export default function DefineAPlanPage() {
                             </div>
                         ) : (
                             <span className="text-sm font-semibold">
-                                {mode === "ai" && !intakeQuestions ? "Continue" : "Generate plan"}
+                                {mode === "custom"
+                                    ? "Save plan"
+                                    : mode === "ai" && !intakeQuestions
+                                      ? "Continue"
+                                      : "Generate plan"}
                             </span>
                         )}
                     </button>
